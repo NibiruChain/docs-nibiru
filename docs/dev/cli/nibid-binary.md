@@ -2,19 +2,60 @@
 order: 1
 ---
 
-# ⚙️ Building the Nibid Binary
+# ⚙️ Installing the Nibid Binary
 
-Instructions on building and installing the `nibid` binary. `nibid` is a command line client for the Nibiru network. Nibiru users can use nibid to send transactions to the Nibiru network and query the blockchain data.{synopsis}
+Instructions on building and installing the `nibid` binary. `nibid` is a command line client for the Nibiru blockchain. Nibiru users can use nibid to send transactions to the Nibiru network, query data from the chain, and run nodes. To install the `nibid` binary, you can either (1) download the binary from the NibiruChain/nibiru releases page (2) or build the binary directly from the source code. {synopsis}
 
-- [⚙️ Building the Nibid Binary](#️-building-the-nibid-binary)
-  - [Install Go](#install-go)
-  - [Install make and gcc](#install-make-and-gcc)
-  - [Build and install the Nibiru binary](#build-and-install-the-nibiru-binary)
-  - [Local development](#local-development)
-    - [Note: Docker Engine](#note-docker-engine)
-  - [Next Steps](#next-steps)
+## Install Option 1 | Downloading the binary
 
-## Install Go
+You'll need one of the `darwin_` binaries if you're using MacOS and one of the `linux_` binaries if you're using something like Ubuntu or WSL.
+
+To know whether you'll need the `amd64` or `arm64`, run one of the following commands:
+
+```bash
+dpkg --print-architecture
+# returns "amd64" on Ubuntu
+```
+
+```bash
+uname -m
+# returns values like x86_64, i686, arm, and aarch64
+```
+
+Download the binary from the [NibiruChain/nibiru releases](https://github.com/NibiruChain/nibiru/releases) page (the current testnet is `v0.15.0`). The assets are at the bottom after the release notes. 
+
+![](../../img/release-assets.png)
+
+After downloading the tar file containing the binary, you'll need to unpack it. Here's an example command for unpacking the tar file.
+
+```bash
+tar -xvf nibiru_linux_amd64.tar.gz && mv nibirud nibid
+# The tar file unpacks with "nibirud" as the default name, so we rename it here.
+```
+
+Finally, add the `nibid` binary to your `$PATH` with one of the methods below.
+
+```bash
+# Add to shell config
+export PATH=<path-to-nibid>:$PATH
+```
+
+```bash
+# Or, copy directly to a /bin folder
+cp nibid /bin/nibid
+```
+
+## Install Option 2 | Building from the Source Code
+
+### 2.1 — Install make and gcc
+
+```bash
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt install git build-essential ufw curl jq snapd --yes
+```
+
+### 2.2 — Install Go
 
 The installation process for Go depends on your OS. Nibiru is meant to build with a Unix system such as MacOS, Ubuntu, or WSL. Please install Go v1.18 using the instructions at [go.dev/doc/install](https://go.dev/doc/install). For Ubuntu, you can use:
 
@@ -32,17 +73,9 @@ export GO111MODULE=on
 export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
 ```
 
-## Install make and gcc
+### 2.3 — Compile the source code
 
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-sudo apt install git build-essential ufw curl jq snapd --yes
-```
-
-## Build and install the Nibiru binary
-
-Begin by cloning the `nibiru` repo.
+To build the binary from source, begin by cloning the `NibiruChain/nibiru` repo. 
 
 ```bash
 cd $HOME
@@ -51,11 +84,12 @@ cd nibiru
 git checkout v0.15.0
 make install
 ```
+## Post-installation
 
-Running these commands should have made `nibid` available in your `$PATH`. You should now be able to view a list of all available commands with
+Running these commands should have made `nibid` available in your `$PATH`. You should now be able to view a list of all available commands:
 
 ```bash
-nibid [command]
+nibid
 ```
 
 ::: tip
@@ -69,9 +103,15 @@ export PATH=$PATH:$(go env GOPATH)/bin
 
 ## Local development
 
-Lastly, you can run the chain for local development with `make localnet`. After opening another terminal, you'll be able to use the full suite of `nibid` commands.
+Lastly, you can run the chain for local development with 
 
-### Note: Docker Engine
+```bash
+make localnet
+```
+
+After opening another terminal, you'll be able to use the full suite of `nibid` commands.
+
+## Docker Engine
 
 You'll need Docker to run commands that use external containers like `make proto-gen`. Instructions for installing Docker can be found [here](https://docs.docker.com/engine/install/).
 
@@ -80,6 +120,7 @@ You'll need Docker to run commands that use external containers like `make proto
 ## Next Steps
 
 #### Learn more about the [`nibid` Command-Line Interface][page-cli]
+
 #### [Setup Cosmovisor][page-cosmovisor]
 
 #### Run a Full Node
@@ -90,7 +131,7 @@ You'll need Docker to run commands that use external containers like `make proto
 #### [What's a node?][page-node-daemon]
 
 [page-cosmovisor]: ../../run-nodes/testnet/cosmovisor
-[page-testnet]: ../../run-nodes/testnet/testnet
+[page-testnet]: ../../run-nodes/testnet
 [page-validator]: ../../run-nodes/validators
 [page-node-daemon]: ../../run-nodes/testnet/node-daemon
 [page-cli]: ./
