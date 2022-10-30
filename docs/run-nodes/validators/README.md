@@ -6,7 +6,7 @@ order: 1
 
 Instructions running a validator node {synopsis}
 
-As the first step, please follow the [instructions to join the testnet](./testnet.md).
+As the first step, please follow the [instructions to join the testnet](../testnet).
 
 ## Install the `nibid` binary
 
@@ -19,7 +19,7 @@ We recommend saving the `chain-id` into your `client.toml`.
 This prevents you from havging to pass the `chain-id` flag with every CLI command.
 
 ```sh
-nibid config chain-id nibiru-testnet-3
+nibid config chain-id nibiru-testnet-1
 ```
 
 ## Send a `create-validator` transaction
@@ -50,7 +50,7 @@ nibid tx staking create-validator \
 --details "put your validator description there" \
 --pubkey=$(nibid tendermint show-validator) \
 --moniker <your_moniker> \
---chain-id nibiru-testnet-3 \
+--chain-id nibiru-testnet-1 \
 --gas-prices 0.025unibi \
 --from <key-name>
 ```
