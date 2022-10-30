@@ -1,4 +1,4 @@
-const REPO = "Unique-Divine/test-doc-deploy"
+const REPO = "NibiruChain/docs-nibiru"
 module.exports = {
   theme: "@nibiruchain/vuepress-theme-cosmos",
   title: "Nibiru Chain",
