@@ -1,18 +1,15 @@
 # deploy.sh - Production deployment
 
 BUILD_PATH=".vuepress/dist"
-ORG_NAME="Unique-Divine"
-REPO_NAME="test-doc-deploy"
+ORG_NAME="NibiruChain"
+REPO_NAME="docs-nibiru"
 
 REPO_URL="https://github.com/$ORG_NAME/$REPO_NAME"
-
-# ORG_NAME="VimDiesel-Cosmos"
-# REPO_NAME="VimDiesel-Cosmos.github.io"
 
 set -e
 
 yarn build
-echo nibiru.zone > $BUILD_PATH/CNAME
+echo docs.nibiru.fi > $BUILD_PATH/CNAME
 
 cd $BUILD_PATH
 touch .nojekyll

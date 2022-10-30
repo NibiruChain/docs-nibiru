@@ -1,5 +1,5 @@
 ---
-order: 3
+order: 1
 ---
 
 # Joining Testnet
@@ -12,7 +12,7 @@ You can find a table of each Nibiru testnet and its current status below.
 
 | Network | Chain ID         | Description              | Version | Status |
 | ------- | ---------------- | ------------------------ | ------- | ------ |
-| Testnet | nibiru-testnet-3 | Nibiru's default testnet | v0.15.0 | Active |
+| Testnet | nibiru-testnet-1 | Nibiru's default testnet | v0.15.0 | Active |
 
 ::: tip
 You can see current status of the blockchain at the [Nibiru Block Explorer](https://explorer.testnet.nibiru.fi/).
@@ -66,7 +66,7 @@ Please follow the [`cosmovisor` setup instructions](./cosmovisor) if you haven't
 1. Init the chain
 
     ```bash
-    nibid init <moniker-name> --chain-id=nibiru-testnet-3 --home $HOME/.nibid
+    nibid init <moniker-name> --chain-id=nibiru-testnet-1 --home $HOME/.nibid
     ```
 
 2. Create a local key pair
@@ -76,22 +76,32 @@ Please follow the [`cosmovisor` setup instructions](./cosmovisor) if you haven't
     nibid keys show <key-name> -a
     ```
 
-3. Copy the genesis file included in the archive received from the Nibiru team to the `$HOME/.nibid/config` folder.
-
+3. Copy the genesis file to the `$HOME/.nibid/config` folder.
+  
+    You can download a copy of the genesis file from the Tendermint RPC endpoint. 
+    
+    ```bash
+    curl -s https://rpc.testnet-1.nibiru.fi/genesis | jq -r .result.genesis > genesis.json
+    ```
+    
+    Then copy the genesis file to the `$HOME/.nibid/config` folder.
+    
     ```bash
     cp genesis.json $HOME/.nibid/config/genesis.json
     ```
-
+  
+<!-- 
     **Genesis.json sha256**
-
+    
     ```bash
-     shasum -a 256 $HOME/.nibid/config/genesis.json
-     94fbd99543f4b7da14f292ea1c61b21ba753e3a84cca64454b8c2fd2d209e6de /home/<user>/.nibid/config/genesis.json
-    ```
+    shasum -a 256 $HOME/.nibid/config/genesis.json
+    94fbd99543f4b7da14f292ea1c61b21ba753e3a84cca64454b8c2fd2d209e6de $HOME/.nibid/config/genesis.json
+    ``` 
+-->
 
 4. Update persistent peers list in the configuration file `$HOME/.nibid/config/config.toml` with the ones from the persistent\_peers.txt.
 
-    Navigate to the directory with the `persistent_peers.txt`file you've received from the Nibiru team manually and run
+    Navigate to the directory with the `persistent_peers.txt` file you've received from the Nibiru team manually and run
 
     ```bash
     export PEERS=$(cat persistent_peers.txt| tr '\n' '_' | sed 's/_/,/g;s/,$//;s/^/"/;s/$/"/') && sed -i "s/persistent_peers = \"\"/persistent_peers = ${PEERS}/g" $HOME/.nibid/config/config.toml
@@ -130,25 +140,26 @@ Please follow the [`cosmovisor` setup instructions](./cosmovisor) if you haven't
     sudo systemctl start cosmovisor-nibiru
     ```
 
-8. Request tokens from the [Web Faucet for nibiru-testnet-3](https://faucet.testnet-3.nibiru.fi/) if required.
+8. Request tokens from the [Web Faucet for nibiru-testnet-1](https://faucet.testnet-1.nibiru.fi/) if required.
 
     ```bash
-    curl -X POST -d '{"address": "your address here", "coins": ["10000000unibi"]}' https://faucet.testnet-3.nibiru.fi/
+    FAUCET_URL="https://faucet.testnet-1.nibiru.fi/"
+    ADDR="..." # your address 
+    curl -X POST -d '{"address": "'"$ADDR"'", "coins": ["10000000unibi","100000000000unusd"]}' $FAUCET_URL
     ```
 
-    You can also request `unusd`.
-
-    ```bash
-    curl -X POST -d '{"address": "your address here", "coins": ["100000000000unusd"]}' <https://faucet.testnet-3.nibiru.fi/>
-    ```
-
-    Please note, that current Testnet Web Faucet limit is `10000000unibi` and `100000000000unusd`.
+    Please note, that current daily limit for the Web Faucet is 10NIBI (`10000000unibi`) and 100,000 NUSD (`100000000000unusd`).
 
     You can also use the testnet Faucet from the `#faucet` channel of the [Nibiru Chain Discord](https://discord.gg/sgPw8ZYfpQ).
+
+---
+
+## Next Steps
 
 ::: tip
 See the [validator docs](../validators) on how to participate as a validator.
 :::
+
 
 ## Example `nibid` commands
 

@@ -4,26 +4,27 @@
 
 **Table of Contents —  Nibi-Perps**
 
-- [Overview](#overview)
-- [Mark Price and Index Price](#mark-price-and-index-price)
-- [Leverage and Position Values](#leverage-and-position-values)
-- [Margin and Margin Ratio](#margin-and-margin-ratio)
-  - [Cross Margin versus Isolated Margin](#cross-margin-versus-isolated-margin)
-- [Virtual Pools](#virtual-pools)
-- [Market Specific Parameters](#market-specific-parameters)
-  - [Trade Limit Ratio](#trade-limit-ratio)
-  - [Fluctuation Limit Ratio](#fluctuation-limit-ratio)
-  - [Max Oracle Spread Limit Ratio](#max-oracle-spread-limit-ratio)
-- [Funding Payments](#funding-payments)
-- [Liquidations](#liquidations)
-- [Liquidation Bad Debt vs Position Bad Debt](#liquidation-bad-debt-vs-position-bad-debt)
-- [Opening Positions](#opening-positions)
-- [Perp: NIBI Token](#perp-nibi-token)
-- [Perp VIP Trading Program](#perp-vip-trading-program)
-- [What are the risks? How are they addressed?](#what-are-the-risks-how-are-they-addressed)
-  - [Ecosystem Fund (EF)](#ecosystem-fund-ef)
-  - [Safety Module](#safety-module)
-  - [Treasury](#treasury)
+- [🤝 Nibi-Perps](#-nibi-perps)
+  - [Overview](#overview)
+  - [Mark Price and Index Price](#mark-price-and-index-price)
+  - [Leverage and Position Values](#leverage-and-position-values)
+  - [Margin and Margin Ratio](#margin-and-margin-ratio)
+    - [Cross Margin versus Isolated Margin](#cross-margin-versus-isolated-margin)
+  - [Virtual Pools](#virtual-pools)
+  - [Market Specific Parameters](#market-specific-parameters)
+    - [Trade Limit Ratio](#trade-limit-ratio)
+    - [Fluctuation Limit Ratio](#fluctuation-limit-ratio)
+    - [Max Oracle Spread Limit Ratio](#max-oracle-spread-limit-ratio)
+  - [Funding Payments](#funding-payments)
+  - [Liquidations](#liquidations)
+  - [Bad Debt](#bad-debt)
+  - [Opening Positions](#opening-positions)
+  - [Perp: NIBI Token](#perp-nibi-token)
+  - [Perp VIP Trading Program](#perp-vip-trading-program)
+  - [What are the risks? How are they addressed?](#what-are-the-risks-how-are-they-addressed)
+    - [Ecosystem Fund (EF)](#ecosystem-fund-ef)
+    - [Safety Module](#safety-module)
+    - [Treasury](#treasury)
 
 ---
 
@@ -36,7 +37,7 @@ While most perps exchanges are designed with off-chain order books, perp impleme
 - **Minimize latency during periods of high volatility.**
 - **Minimize the imbalance in open interest.**
 - **Increase the number of unique traders on the platform.**
-- **Reduce the bleeding of the ecosystem fund**: One of the top priorities on the Nibiru Perps protocol it to keep the funding rates of the listed perps at parity to all other perpetual futures exchanges while monitoring the opportunity for arbitrageurs.
+- **Reduce the bleeding of the Ecosystem Fund**: One of the top priorities on the Nibiru Perps protocol it to keep the funding rates of the listed perps at parity to all other perpetual futures exchanges while monitoring the opportunity for arbitrageurs.
 
 Nibi-Perps is currently on private testnet.
 
@@ -145,23 +146,25 @@ Here, position size refers to amount of base asset represented by the derivative
 
 When using leverage on positions, traders naturally become exposed to liquidation risks. For example, when the underlying value of a trader’s perp declines, the derivative asset will approach the value of its margin, putting the exchange at risk. To prevent the position from falling below the value of the margin that backs it, the protocol will proactively liquidate the position. Liquidations are triggered by **liquidations bots** that earn a small percentage of the remaining position.
 
-**`Liquidate`** is a function which closes a position and distributes assets based on a liquidation fee that goes to the liquidator and ecosystem fund. Liquidations prevent traders' accounts from falling into negative equity.
+**`Liquidate`** is a function which closes a position and distributes assets based on a liquidation fee that goes to the liquidator and Ecosystem Fund. Liquidations prevent traders' accounts from falling into negative equity.
 
 A liquidation happens when a trader can no longer meet the margin requirement of their leveraged position. In Nibiru, meeting the margin requirement means maintaining a margin ratio on the position that exceeds the **maintenance margin ratio** (6.25%), which is the minimum margin ratio that a position can have before being liquidated.
 
 When a liquidator address sends a message to liquidate a position, the protocol keeper first computes the margin ratio of the position using the mark price. The notional is taken to be that maximum of the `markSpot` (mark at an instance in time) notional and `markTWAP` notional. Similarly, the unrealized PnL is taken to be the max of the `markSpot` PnL and `markTWAP` PnL. This computation realizes any outstanding funding payments on the position, tells us whether or not the position is underwater, and tells us if the position has "**bad debt**" (margin owed in excess of the collateral backing the position).
 
-If this margin ratio is below the maintenance margin ratio, the liquidation message will close the position. This consists of opening a reverse position with a size equivalent to the one that is currently open, which brings the size to zero. A liquidation fee is taken out of the margin and distributed in some split (currently 50:50) between the Nibi-Perps Ecosystem Fund (Perp EF) and the liquidator. If any margin remains in the position after the liquidation fee is taken out, this remaining margin is sent back to the owner of the position. And if bad debt is created by the liquidation fee, it is payed by the Perp EF.
+If this margin ratio is below the maintenance margin ratio, the liquidation message will close the position. This consists of opening a reverse position with a size equivalent to the one that is currently open, which brings the size to zero. A liquidation fee is taken out of the margin and distributed in some split (currently 50:50) between the **Nibi-Perps Ecosystem Fund (Perp EF)** and the liquidator. If any margin remains in the position after the liquidation fee is taken out, this remaining margin is sent back to the owner of the position. And if bad debt is created by the liquidation fee, it is payed by the Perp EF.
 
-## Liquidation Bad Debt vs Position Bad Debt
+## Bad Debt
 
-Position bad debt accrues when the realized PnL of the position eats away all the margin and the position reaches a negative margin. In this case, the ecosystem fund covers the loss. Liquidation bad debt is when the remaining margin of the position isn't enough to cover the liquidator's service fee so the payment also comes out of the ecosystem fund.
+Bad debt is when the margin owed exceeds the value of the collateral backing a position. There are two broad types of bad debt: positional bad debt and liquidation bad debt.
 
-Two scenarios can happen which lead to bad debt:
+**Positional bad debt** accrues when the realized PnL of a position results in a negative margin value. **Liquidation bad debt** accrues when the remaining margin of the position isn't enough to cover the liquidator's service fee.
 
-1. The remaining margin on the position is zero (meaning the realized PnL ate it all up). In this case, there is both positional bad debt and liquidation bad debt, since there is no margin remaining.
+If a position has some remaining margin after realizing its PnL but not enough to cover the liquidator fee, there is only liquidation bad debt, and all of the remaining margin is used to help cover the liquidator fee.
 
-2. The position has some remaining margin left after realizing PnL but not enough to cover the liquidator fee. In this case, all of the margin is used to cover the liquidator fee and the ecosystem fund pays the remainder. There is only liquidation bad debt.
+If instead the remaining margin on a position becomes negative due to the realized PnL, there is both positional and liquidation bad debt because a position with nonpositive value can't possibly cover a liquidation fee.
+
+Whenever a trader owes bad debt, the Perp EF covers the payment. 
 
 ## Opening Positions
 
