@@ -24,7 +24,7 @@ sudo rm $HOME/go/bin/nibid
 cd nibiru
 git pull
 git fetch --tags
-git checkout v0.13.0
+git checkout v0.15.0
 make install
 ```
 
@@ -32,9 +32,9 @@ Verify the binary version by running
 
 ```bash
 nibid version
-# > v0.13.0
+# > v0.15.0
 ```
 
 ## Recreate the validator
 
-Follow the same steps from ["Joining Testnet"](../testnet/testnet) and ["Validating on Testnet"](./) again.
+Follow the same steps from ["Joining Testnet"](../testnet) and ["Validating on Testnet"](./) again.
