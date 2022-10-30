@@ -46,8 +46,8 @@ Nibiru is IBC compliant at genesis and connected over 40 blockchains. IBC enable
 
 The security of the Nibiru blockchain relies on a set of validators to commit new blocks and participate in Tendermint BFT consensus by brodcasting votes that contain cryptographic signatures signed by each validator's private key. Validators stake **NIBI**, the protocol's native token used for gas, governance, and "mining". Users can delegate NIBI to validators that record and verify transactions in exchange for rewards.
 
-### [Frequently Asked Questions (FAQ)](./about/faq)
+### [Frequently Asked Questions (FAQ)](./learn/faq)
 
 ### Contribution guidelines for this documentation
 
-You can contribute to improve this documentation by submitting a [GitHub](https://github.com/NibiruChain/docs) issue or opening a pull request.
+You can contribute to improve this documentation by submitting a [GitHub](https://github.com/NibiruChain/docs-nibiru) issue or opening a pull request.

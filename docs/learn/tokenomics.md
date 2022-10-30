@@ -5,10 +5,10 @@ Nibiru will have a fully diluted token supply of 1.5B tokens. The tokens will be
 
 | Split (%) | Group                   | Description                                                                 | Schedule                                                    |
 | --------- | ----------------------- | --------------------------------------------------------------------------- | ----------------------------------------------------------- |
-| 60        | Community               | Stakers, perps traders, liquidity providers of the AMM, and options traders | Non-linear schedule similar to Juno or Curve.               |
+| 60        | Community               | Stakers, perps traders, and liquidity providers of the AMM | Non-linear schedule similar to Juno or Curve.               |
 | 21        | Team                    | Core team and future hires                                                  | 1 year cliff, then 3 year linear vest                       |
-| 12        | Early Backers / Private | Strategic partners and private investors                                    | 1 year cliff, then 3 year linear vest (liquid each quarter) |
-| 7         | Seed                    | Seed investors                                                              | 1 year cliff, then 3 year linear vest                       |
+| 11        | Early Backers / Private | Strategic partners and private investors                                    | 1 year cliff, then 3 year linear vest (liquid each quarter) |
+| 8         | Seed                    | Seed investors                                                              | 1 year cliff, then 3 year linear vest                       |
 
 The token supply is distributed over an 8-year time frame with the following release schedule.
 
@@ -22,11 +22,11 @@ As more tokens are released into the ecosystem, Nibiru will be governed primaril
 
 The team will receive 21% of the total token allocation, with 4.25% available 12 months post genesis and the remaining 12.75% vesting linearly over the following 36 months.
 
-## Seed Investors (7%)
+## Seed Investors (8%)
 
 Seed investors who contributed funds to the initial development and launch of Nibiru will receive an allocation of 1.75% of the total supply 12 months after genesis time with the remaining 5.25% vesting linearly over the following 36 months.
 
-## Early Backers / Private (12%)
+## Early Backers / Private (11%)
 
 Investors and strategic partners will receive an allocation of 12% (180M) of the total supply, with 3% (45M) available 12 months after genesis and the remaining 9% (135M) will vest linearly over the following 36 months, at a rate of 3,750,000 NIBI tokens per month.
 
@@ -57,7 +57,3 @@ Liquidity providers can choose to lock their LP tokens in a gauge on a continuou
 Traders will be rewarded with NIBI tokens for doing certain actions on the perps trading platform, such as opening positions or paying funding payments.
 
 Nibiru’s Perp Exchange will also incentivize the safety staking pool (see [dYdX’s Safety Module](https://docs.dydx.community/dydx-governance/staking-pools/safety-staking-pool)) with NIBI as an additional backstop for the system.
-
-### Ecosystem: **Options Protocol**
-
-Traders will be rewarded with NIBI tokens for investing in the products on the options platform.

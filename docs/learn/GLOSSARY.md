@@ -60,12 +60,7 @@ engine and a generic application interface.
 | [Tendermint Core](https://docs.tendermint.com/) |  The consensus engine, called [Tendermint Core](https://docs.tendermint.com/), ensures that the same transactions are recorded on every machine in the same order. | 
 | [Application Blockchain Interface (ABCI)](https://docs.tendermint.com/master/spec/abci/) | The application interface, called the [Application Blockchain Interface (ABCI)](https://docs.tendermint.com/master/spec/abci/), enables the transactions to be processed in any programming language. | 
 
-The consensus engine, called
-[Tendermint Core](https://docs.tendermint.com/), ensures that the same transactions are recorded on every machine in the same order. 
-
-The application interface, called the [Application Blockchain Interface (ABCI)](https://docs.tendermint.com/master/spec/abci/), enables the transactions to be processed in any programming language.
-
-Tendermint has evolved to be a general purpose blockchain consensus engine that
+Tendermint has evolved to be a general purpose blockchain consensus engine that 
 can host arbitrary application states. Since Tendermint can replicate arbitrary
 applications, it can be used as a plug-and-play replacement for the consensus
 engines of other blockchains. Evmos is such an example of an ABCI application
