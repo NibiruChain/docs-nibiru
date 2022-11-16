@@ -53,16 +53,16 @@ module.exports = {
       src: "/nibi-logo-on-white-pink.svg",
     },
     versions: [
-      {
-        "label": "main",
-        "key": "main"
-      },
+      // {
+      //   "label": "main",
+      //   "key": "main"
+      // },
     ],
     topbar: {
       banner: true
     },
     sidebar: {
-      auto: true,
+      auto: false,
       nav: [
         {
           title: "Nibiru Ecosystem",

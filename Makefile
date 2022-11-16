@@ -3,6 +3,7 @@
 ###############################################################################
 
 DOCS_OUTPUT?=/tmp/nibiru-docs
+DOCS_DOMAIN=docs.nibiru.fi
 
 # This builds a docs site for each branch/tag in `./docs/versions` and copies
 # each site to a version prefixed path. The last entry inside the `versions`
@@ -11,11 +12,9 @@ DOCS_OUTPUT?=/tmp/nibiru-docs
 # of the build at the end.
 build-docs:
 	@cd docs && \
-	while read -r branch path_prefix; do \
-		(git checkout $${branch} && yarn install --frozen-lockfile && VUEPRESS_BASE="/$${path_prefix}/" yarn build) ; \
-		mkdir -p $(DOCS_OUTPUT)/$${path_prefix} ; \
-		cp -r .vuepress/dist/* $(DOCS_OUTPUT)/$${path_prefix}/ ; \
-		cp $(DOCS_OUTPUT)/$${path_prefix}/index.html $(DOCS_OUTPUT) ; \
-		cp $(DOCS_OUTPUT)/$${path_prefix}/404.html $(DOCS_OUTPUT) ; \
-	done < versions ;
+	yarn install --frozen-lockfile && \
+	yarn build && \
+	mkdir -p $(DOCS_OUTPUT) && \
+	cp -r .vuepress/dist/* $(DOCS_OUTPUT)
+	@echo $(DOCS_DOMAIN) > $(DOCS_OUTPUT)/CNAME
 .PHONY: build-docs
