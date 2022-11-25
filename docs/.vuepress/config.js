@@ -51,7 +51,6 @@ module.exports = {
     // Logo in the top left corner, file in .vuepress/public/
     logo: {
       src: "/nibi-logo-on-white-pink.svg",
-      // src: "https://raw.githubusercontent.com/peterthehan/peterthehan/master/assets/twitter.svg",
     },
     versions: [
       // {

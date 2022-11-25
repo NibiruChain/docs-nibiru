@@ -8,7 +8,7 @@ Testnets are testing instances of the Nibiru blockchain. Testnet tokens are sepa
 
 ## Available Networks
 
-You can find a table of each Nibiru testnet and its current status below. 
+You can find a table of each Nibiru testnet and its current status below.
 
 | Network | Chain ID         | Description              | Version | Status |
 | ------- | ---------------- | ------------------------ | ------- | ------ |
@@ -27,7 +27,7 @@ The explorer allows you to search through transactions, blocks, wallet addresses
 
 ---
 
-## Pre-requisites 
+## Pre-requisites
 
 ### Minimum hardware requirements
 
@@ -44,7 +44,7 @@ sudo apt upgrade --yes
 
 ### Verify nibid version
 
-Please check for the correct version of the binary. 
+Please check for the correct version of the binary.
 
 ::: tip
 If you have not installed `nibid`, please start with the instructions on building the [`nibid` binary](../../dev/cli/nibid-binary).
@@ -57,7 +57,7 @@ v0.15.0
 
 ---
 
-## Cosmovisor 
+## Cosmovisor
 
 Please follow the [`cosmovisor` setup instructions](./cosmovisor) if you haven't already.
 
@@ -78,14 +78,14 @@ Please follow the [`cosmovisor` setup instructions](./cosmovisor) if you haven't
 
 3. Copy the genesis file to the `$HOME/.nibid/config` folder.
   
-    You can download a copy of the genesis file from the Tendermint RPC endpoint. 
-    
+    You can download a copy of the genesis file from the Tendermint RPC endpoint.
+
     ```bash
     curl -s https://rpc.testnet-1.nibiru.fi/genesis | jq -r .result.genesis > genesis.json
     ```
-    
+
     Then copy the genesis file to the `$HOME/.nibid/config` folder.
-    
+
     ```bash
     cp genesis.json $HOME/.nibid/config/genesis.json
     ```
@@ -104,9 +104,8 @@ Please follow the [`cosmovisor` setup instructions](./cosmovisor) if you haven't
     Save the following text in a file named `persistent_peers.txt`.
 
     ```
-    37713248f21c37a2f022fbbb7228f02862224190@35.243.130.198:26656
-    ff59bff2d8b8fb6114191af7063e92a9dd637bd9@35.185.114.96:26656
-    cb431d789fe4c3f94873b0769cb4fce5143daf97@35.227.113.63:26656
+    f8610c8c491e8d18e8b566c47ec13f34176f451c@35.185.124.166:26656
+    ed6bec50bf3db42d7caa3e7e57e118f50c944dca@34.23.132.200:26656
     ```
 
     Navigate to the directory with the `persistent_peers.txt` file and run
@@ -168,7 +167,6 @@ Please follow the [`cosmovisor` setup instructions](./cosmovisor) if you haven't
 See the [validator docs](../validators) on how to participate as a validator.
 :::
 
-
 ## Example `nibid` commands
 
 Ex: Query to see which pools are open for trading on Nibi-Perps and the current mark and index prices.
@@ -187,5 +185,6 @@ nibid tx perp open-position buy ubtc:unusd 10 100 0 --from <key> --home $HOME/.n
 ```
 
 For the full list of `nibid` commands, see:
+
 - The [`nibid` CLI introduction](../../dev/cli)
 - Nibiru [Module Reference](../../dev/x)

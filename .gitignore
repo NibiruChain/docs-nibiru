@@ -55,3 +55,4 @@ dependency-graph.png
 
 *.history
 
+node_modules
