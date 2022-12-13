@@ -20,21 +20,18 @@ jobs:
     name: VuePress build
     runs-on: ubuntu-latest
     container:
-      image: alpine:latest
+      image: node:16-alpine
     permissions:
       contents: read
     steps:
-      - name: Install generator dependencies
-        run: |
-          apk add --no-cache make bash git yarn
       - uses: actions/checkout@v3
         with:
           # We need to fetch full history so the backport branches for previous
           # versions will be available for the build.
           fetch-depth: 0
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
+      - name: Install generator dependencies
+        run: |
+          apk add make bash git yarn
       - name: Build documentation
         run: |
           git config --global --add safe.directory "$PWD"
