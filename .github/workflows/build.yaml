@@ -5,8 +5,7 @@
 name: Build static documentation site (pull request)
 on:
   pull_request:
-  paths:
-    - docs/**
+    paths: [docs/**]
 
 jobs:
   # This is split into two jobs so that the build, which runs yarn, does not
