@@ -3,6 +3,12 @@
 
 ## Table of Contents
 
+- [dex/v1/event.proto](#dex_v1_event-proto)
+    - [EventAssetsSwapped](#nibiru-dex-v1-EventAssetsSwapped)
+    - [EventPoolCreated](#nibiru-dex-v1-EventPoolCreated)
+    - [EventPoolExited](#nibiru-dex-v1-EventPoolExited)
+    - [EventPoolJoined](#nibiru-dex-v1-EventPoolJoined)
+  
 - [dex/v1/genesis.proto](#dex_v1_genesis-proto)
     - [GenesisState](#nibiru-dex-v1-GenesisState)
   
@@ -13,6 +19,8 @@
     - [Pool](#nibiru-dex-v1-Pool)
     - [PoolAsset](#nibiru-dex-v1-PoolAsset)
     - [PoolParams](#nibiru-dex-v1-PoolParams)
+  
+    - [PoolType](#nibiru-dex-v1-PoolType)
   
 - [dex/v1/query.proto](#dex_v1_query-proto)
     - [QueryExitExactAmountInRequest](#nibiru-dex-v1-QueryExitExactAmountInRequest)
@@ -51,10 +59,6 @@
     - [Query](#nibiru-dex-v1-Query)
   
 - [dex/v1/tx.proto](#dex_v1_tx-proto)
-    - [EventAssetsSwapped](#nibiru-dex-v1-EventAssetsSwapped)
-    - [EventPoolCreated](#nibiru-dex-v1-EventPoolCreated)
-    - [EventPoolExited](#nibiru-dex-v1-EventPoolExited)
-    - [EventPoolJoined](#nibiru-dex-v1-EventPoolJoined)
     - [MsgCreatePool](#nibiru-dex-v1-MsgCreatePool)
     - [MsgCreatePoolResponse](#nibiru-dex-v1-MsgCreatePoolResponse)
     - [MsgExitPool](#nibiru-dex-v1-MsgExitPool)
@@ -67,6 +71,93 @@
     - [Msg](#nibiru-dex-v1-Msg)
   
 - [Scalar Value Types](#scalar-value-types)
+
+
+
+<a name="dex_v1_event-proto"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## dex/v1/event.proto
+
+
+
+<a name="nibiru-dex-v1-EventAssetsSwapped"></a>
+
+### EventAssetsSwapped
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| address | [string](#string) |  |  |
+| pool_id | [uint64](#uint64) |  |  |
+| token_in | [cosmos.base.v1beta1.Coin](#cosmos-base-v1beta1-Coin) |  |  |
+| token_out | [cosmos.base.v1beta1.Coin](#cosmos-base-v1beta1-Coin) |  |  |
+
+
+
+
+
+
+<a name="nibiru-dex-v1-EventPoolCreated"></a>
+
+### EventPoolCreated
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| creator | [string](#string) |  |  |
+| pool_id | [uint64](#uint64) |  |  |
+
+
+
+
+
+
+<a name="nibiru-dex-v1-EventPoolExited"></a>
+
+### EventPoolExited
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| address | [string](#string) |  |  |
+| pool_id | [uint64](#uint64) |  |  |
+| pool_shares_in | [cosmos.base.v1beta1.Coin](#cosmos-base-v1beta1-Coin) |  |  |
+| tokens_out | [cosmos.base.v1beta1.Coin](#cosmos-base-v1beta1-Coin) | repeated |  |
+
+
+
+
+
+
+<a name="nibiru-dex-v1-EventPoolJoined"></a>
+
+### EventPoolJoined
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| address | [string](#string) |  |  |
+| pool_id | [uint64](#uint64) |  |  |
+| tokens_in | [cosmos.base.v1beta1.Coin](#cosmos-base-v1beta1-Coin) | repeated |  |
+| pool_shares_out | [cosmos.base.v1beta1.Coin](#cosmos-base-v1beta1-Coin) |  |  |
+| rem_coins | [cosmos.base.v1beta1.Coin](#cosmos-base-v1beta1-Coin) | repeated |  |
+
+
+
+
+
+ 
+
+ 
+
+ 
+
+ 
 
 
 
@@ -187,12 +278,27 @@ Configuration parameters for the pool.
 | ----- | ---- | ----- | ----------- |
 | swap_fee | [string](#string) |  |  |
 | exit_fee | [string](#string) |  |  |
+| A | [string](#string) |  | Amplification Parameter (A): Larger value of A make the curve better resemble a straight line in the center (when pool is near balance). Highly volatile assets should use a lower value, while assets that are closer together may be best with a higher value. This is only used if the pool_type is set to 1 (stableswap) |
+| pool_type | [PoolType](#nibiru-dex-v1-PoolType) |  |  |
 
 
 
 
 
  
+
+
+<a name="nibiru-dex-v1-PoolType"></a>
+
+### PoolType
+- `balancer`: Balancer are pools defined by the equation xy=k, extended by the weighs introduced by Balancer.
+- `stableswap`: Stableswap pools are defined by a combination of constant-product and constant-sum pool
+
+| Name | Number | Description |
+| ---- | ------ | ----------- |
+| BALANCER | 0 |  |
+| STABLESWAP | 1 |  |
+
 
  
 
@@ -716,77 +822,6 @@ Query defines the gRPC querier service.
 
 
 
-<a name="nibiru-dex-v1-EventAssetsSwapped"></a>
-
-### EventAssetsSwapped
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| address | [string](#string) |  |  |
-| pool_id | [uint64](#uint64) |  |  |
-| token_in | [cosmos.base.v1beta1.Coin](#cosmos-base-v1beta1-Coin) |  |  |
-| token_out | [cosmos.base.v1beta1.Coin](#cosmos-base-v1beta1-Coin) |  |  |
-
-
-
-
-
-
-<a name="nibiru-dex-v1-EventPoolCreated"></a>
-
-### EventPoolCreated
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| creator | [string](#string) |  |  |
-| pool_id | [uint64](#uint64) |  |  |
-
-
-
-
-
-
-<a name="nibiru-dex-v1-EventPoolExited"></a>
-
-### EventPoolExited
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| address | [string](#string) |  |  |
-| pool_id | [uint64](#uint64) |  |  |
-| pool_shares_in | [cosmos.base.v1beta1.Coin](#cosmos-base-v1beta1-Coin) |  |  |
-| tokens_out | [cosmos.base.v1beta1.Coin](#cosmos-base-v1beta1-Coin) | repeated |  |
-
-
-
-
-
-
-<a name="nibiru-dex-v1-EventPoolJoined"></a>
-
-### EventPoolJoined
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| address | [string](#string) |  |  |
-| pool_id | [uint64](#uint64) |  |  |
-| tokens_in | [cosmos.base.v1beta1.Coin](#cosmos-base-v1beta1-Coin) | repeated |  |
-| pool_shares_out | [cosmos.base.v1beta1.Coin](#cosmos-base-v1beta1-Coin) |  |  |
-| rem_coins | [cosmos.base.v1beta1.Coin](#cosmos-base-v1beta1-Coin) | repeated |  |
-
-
-
-
-
-
 <a name="nibiru-dex-v1-MsgCreatePool"></a>
 
 ### MsgCreatePool
@@ -862,6 +897,7 @@ Message to join a pool (identified by poolId) with a set of tokens to deposit.
 | sender | [string](#string) |  |  |
 | pool_id | [uint64](#uint64) |  |  |
 | tokens_in | [cosmos.base.v1beta1.Coin](#cosmos-base-v1beta1-Coin) | repeated |  |
+| use_all_coins | [bool](#bool) |  |  |
 
 
 
