@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "serve": "trap 'exit 0' SIGINT; vuepress dev --no-cache",
-    "build": "trap 'exit 0' SIGINT; vuepress build --no-cache"
+    "build": "trap 'exit 0' SIGINT; vuepress build --no-cache",
+    "docgen-nibijs": "yarn exec ./scripts/docgen-ts.sh"
   },
   "author": "Nibiru Chain",
   "license": "ISC",
@@ -17,6 +18,8 @@
     "vue": "^2.6.14"
   },
   "devDependencies": {
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.4",
     "watchpack": "^2.2.0"
   }
 }

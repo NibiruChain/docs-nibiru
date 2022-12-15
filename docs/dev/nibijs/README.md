@@ -1,12 +1,17 @@
-# TypeScript SDK — nibijs
+---
+order: 1
+---
 
-The official TypeScript SDK for the Nibiru blockchain {synopsis}
+# NibiJS Documentation - v0.8.1
+
+NibiJS Documentation - v0.8.1 / [Exports](nibijs.md)
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/NibiruChain/ts-sdk/main/img/nibijs.png" width="100%">
 </p>
 
 <p align="center">
+The official TypeScript SDK for the Nibiru blockchain
 </p>
 
 <div style="display: flex; flex-direction: row; gap: 4px;">
@@ -31,15 +36,14 @@ The official TypeScript SDK for the Nibiru blockchain {synopsis}
 
 The NibiJS (`@nibiruchain/nibijs`) package makes it possible to interact with Nibiru from a Node.js or browser environment. `nibijs` provides simple abstractions for core data structures, serialization, key management, API requests, and the submission of transactions. 
 
-The `nibijs` source code can be found in the ["packages" directory](https://github.com/NibiruChain/ts-sdk/blob/main/packages).  The types and classes generated from Nibiru's `.proto` files are inside a separate `npm` package called `@nibiruchain/protojs`. 
+The `nibijs` source code can be found in the ["packages" directory](https://github.com/NibiruChain/ts-sdk/tree/main/packages).  The types and classes generated from Nibiru's `.proto` files are inside a separate `npm` package called `@nibiruchain/protojs`. 
 
 #### Table of Contents
-- [TypeScript SDK — nibijs](#typescript-sdk--nibijs)
-  - [Installation](#installation)
-  - [Usage](#usage)
-  - [Codebase structure](#codebase-structure)
-  - [Development Quick Start](#development-quick-start)
-  - [🔓 License](#-license)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Codebase structure](#codebase-structure)
+- [Development Quick Start](#development-quick-start)
+- [🔓 License](#-license)
 
 To learn more about Nibiru, see [docs.nibiru.fi](https://docs.nibiru.fi) 
 
@@ -52,15 +56,26 @@ To learn more about Nibiru, see [docs.nibiru.fi](https://docs.nibiru.fi)
 [npm-nibijs]: https://www.npmjs.com/package/@nibiruchain/nibijs
 
 ```
-yarn add @nibiruchain/nibijs 
-# npm install @nibiruchain/nibijs # another option 
+npm install @nibiruchain/nibijs # or yarn add
 ```
 
 ## Usage 
 
 The entrypoint for `nibijs` is the `Sdk` object, which is meant to mimic the root of a command line interface. It can be used for both queries and transactions.
 
-#### Example: Querying the chain
+#### Example: Creating a wallet
+
+```js
+import { newRandomWallet, WalletHD } from "@nibiruchain/nibijs/dist/tx"
+const wallet: WalletHD = await newRandomWallet()
+const [{ address }] = await wallet.getAccounts()
+
+// Save the mnemonic somewhere to re-use the account
+console.log("mnemonic: ", wallet.mnemonic)
+console.log("address: ", address)
+```
+
+#### Example: Querying
 
 ```js
 import { Testnet, newSdk } from "@nibiruchain/nibijs"

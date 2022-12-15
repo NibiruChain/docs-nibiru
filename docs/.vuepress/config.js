@@ -121,6 +121,11 @@ module.exports = {
               path: "/dev/cli"
             },
             {
+              title: "TypeScript SDK — nibijs",
+              directory: true,
+              path: "/dev/nibijs"
+            },
+            {
               title: "Module Reference",
               directory: true,
               path: "/dev/x",
@@ -129,11 +134,6 @@ module.exports = {
               title: "Nibiru Protobuf",
               directory: true,
               path: "/dev/protobuf",
-            },
-            {
-              title: "TypeScript SDK — nibijs",
-              directory: false,
-              path: "/dev/nibijs.html"
             },
             {
               title: "Python SDK",
