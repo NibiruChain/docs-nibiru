@@ -1,38 +1,34 @@
-# Build and deploy the docs.nibiru.fi website content.
-# The static content is published to GitHub Pages.
-#
 # For documentation build info, see docs/DOCS_README.md.
-name: Build static documentation site (pull request)
+name: ⛓️ Test static build (pull request)
 on:
   pull_request:
     paths: [docs/**]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.head_ref }}
+  cancel-in-progress: ${{ ! (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/release/')) }}
+
 jobs:
-  # This is split into two jobs so that the build, which runs yarn, does not
-  # have write access to anything. The deploy requires write access to publish
-  # to the branch used by GitHub Pages, however, so we can't just make the
-  # whole workflow read-only.
-  build:
-    name: VuePress build (Pull Request)
+  tests:
     runs-on: ubuntu-latest
-    container:
-      image: node:16-alpine
-    permissions:
-      contents: read
+    defaults:
+      run:
+        working-directory: docs
     steps:
       - uses: actions/checkout@v3
+      - name: Setup NodeJS and npm
+        uses: actions/setup-node@v3
         with:
-          # We need to fetch full history so the backport branches for previous
-          # versions will be available for the build.
-          fetch-depth: 0
-      - name: Install generator dependencies
-        run: |
-          apk add make bash git yarn
-      - name: Build documentation
-        run: |
-          git config --global --add safe.directory "$PWD"
-          make build-docs
-      - uses: actions/upload-artifact@v3
+          node-version: "16"
+      - name: Install yarn using npm
+        run: npm install -g yarn
+      - name: Setup NodeJS with yarn caching
+        uses: actions/setup-node@v3
         with:
-          name: build-output
-          path: /tmp/nibiru-docs
+          node-version: "16"
+          cache: "yarn"
+          cache-dependency-path: docs/yarn.lock
+      - name: Install dependencies
+        run: yarn
+      - name: Build the application
+        run: yarn build
