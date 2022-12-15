@@ -1,0 +1,38 @@
+# Build and deploy the docs.nibiru.fi website content.
+# The static content is published to GitHub Pages.
+#
+# For documentation build info, see docs/DOCS_README.md.
+name: Build static documentation site (pull request)
+on:
+  pull_request:
+    paths: [docs/**]
+
+jobs:
+  # This is split into two jobs so that the build, which runs yarn, does not
+  # have write access to anything. The deploy requires write access to publish
+  # to the branch used by GitHub Pages, however, so we can't just make the
+  # whole workflow read-only.
+  build:
+    name: VuePress build (Pull Request)
+    runs-on: ubuntu-latest
+    container:
+      image: node:16-alpine
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          # We need to fetch full history so the backport branches for previous
+          # versions will be available for the build.
+          fetch-depth: 0
+      - name: Install generator dependencies
+        run: |
+          apk add make bash git yarn
+      - name: Build documentation
+        run: |
+          git config --global --add safe.directory "$PWD"
+          make build-docs
+      - uses: actions/upload-artifact@v3
+        with:
+          name: build-output
+          path: /tmp/nibiru-docs
