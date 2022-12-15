@@ -5,6 +5,7 @@
 
 - [perp/v1/event.proto](#perp_v1_event-proto)
     - [FundingRateChangedEvent](#nibiru-perp-v1-FundingRateChangedEvent)
+    - [MetricsEvent](#nibiru-perp-v1-MetricsEvent)
     - [PositionChangedEvent](#nibiru-perp-v1-PositionChangedEvent)
     - [PositionLiquidatedEvent](#nibiru-perp-v1-PositionLiquidatedEvent)
     - [PositionSettledEvent](#nibiru-perp-v1-PositionSettledEvent)
@@ -13,8 +14,10 @@
     - [GenesisState](#nibiru-perp-v1-GenesisState)
   
 - [perp/v1/query.proto](#perp_v1_query-proto)
-    - [QueryFundingRatesRequest](#nibiru-perp-v1-QueryFundingRatesRequest)
-    - [QueryFundingRatesResponse](#nibiru-perp-v1-QueryFundingRatesResponse)
+    - [QueryCumulativePremiumFractionRequest](#nibiru-perp-v1-QueryCumulativePremiumFractionRequest)
+    - [QueryCumulativePremiumFractionResponse](#nibiru-perp-v1-QueryCumulativePremiumFractionResponse)
+    - [QueryMetricsRequest](#nibiru-perp-v1-QueryMetricsRequest)
+    - [QueryMetricsResponse](#nibiru-perp-v1-QueryMetricsResponse)
     - [QueryParamsRequest](#nibiru-perp-v1-QueryParamsRequest)
     - [QueryParamsResponse](#nibiru-perp-v1-QueryParamsResponse)
     - [QueryPositionRequest](#nibiru-perp-v1-QueryPositionRequest)
@@ -26,6 +29,7 @@
   
 - [perp/v1/state.proto](#perp_v1_state-proto)
     - [LiquidateResp](#nibiru-perp-v1-LiquidateResp)
+    - [Metrics](#nibiru-perp-v1-Metrics)
     - [PairMetadata](#nibiru-perp-v1-PairMetadata)
     - [Params](#nibiru-perp-v1-Params)
     - [Position](#nibiru-perp-v1-Position)
@@ -42,6 +46,8 @@
     - [MsgAddMarginResponse](#nibiru-perp-v1-MsgAddMarginResponse)
     - [MsgClosePosition](#nibiru-perp-v1-MsgClosePosition)
     - [MsgClosePositionResponse](#nibiru-perp-v1-MsgClosePositionResponse)
+    - [MsgDonateToEcosystemFund](#nibiru-perp-v1-MsgDonateToEcosystemFund)
+    - [MsgDonateToEcosystemFundResponse](#nibiru-perp-v1-MsgDonateToEcosystemFundResponse)
     - [MsgLiquidate](#nibiru-perp-v1-MsgLiquidate)
     - [MsgLiquidateResponse](#nibiru-perp-v1-MsgLiquidateResponse)
     - [MsgMultiLiquidate](#nibiru-perp-v1-MsgMultiLiquidate)
@@ -88,6 +94,26 @@ Emitted when a new funding rate is calculated.
 
 
 
+<a name="nibiru-perp-v1-MetricsEvent"></a>
+
+### MetricsEvent
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| pair | [string](#string) |  |  |
+| net_size | [string](#string) |  | Sum of all active position sizes for the pair. |
+| volumeQuote | [string](#string) |  | Total notional volume for the pair. |
+| volumeBase | [string](#string) |  | Total size volume for the pair. |
+| block_height | [int64](#int64) |  | The block number at which metrics were generated. |
+| block_time_ms | [int64](#int64) |  | The block time in unix milliseconds at which metrics were generated. |
+
+
+
+
+
+
 <a name="nibiru-perp-v1-PositionChangedEvent"></a>
 
 ### PositionChangedEvent
@@ -99,15 +125,15 @@ TODO: Is there a way to split this into different events without creating too mu
 | ----- | ---- | ----- | ----------- |
 | pair | [string](#string) |  | identifier of the corresponding virtual pool for the position |
 | trader_address | [string](#string) |  | owner of the position. |
-| margin | [cosmos.base.v1beta1.Coin](#cosmos-base-v1beta1-Coin) |  | amount of margin backing the position. |
-| position_notional | [string](#string) |  | margin * leverage * vPrice. &#39;notional&#39; is the virtual size times the virtual price on &#39;vpool&#39;. |
-| exchanged_position_size | [string](#string) |  | magnitude of the change to vsize. The vsize is the amount of base assets for the position, margin * leverage * priceBasePerQuote. |
-| transaction_fee | [cosmos.base.v1beta1.Coin](#cosmos-base-v1beta1-Coin) |  | transaction fee paid |
-| position_size | [string](#string) |  | position virtual size after the change |
+| margin | [cosmos.base.v1beta1.Coin](#cosmos-base-v1beta1-Coin) |  | Amount of collateral (quote units) backing the position after the change. |
+| position_notional | [string](#string) |  | Position notional (quote units) after the change. In general, &#39;notional = baseAmount * priceQuotePerBase&#39;, where size is the baseAmount. |
+| exchanged_size | [string](#string) |  | Exchanged size is the magnitude of the change to position size (base units). The size is a signed quantity expressing how much exposure a position has in base units of the pair. |
+| exchanged_notional | [string](#string) |  | Exchanged notional is the value of the exchanged size in quote units. exchangedNotional = posBefore.OpenNotional &#43; (direction * realizedPnl), where &#39;posBefore&#39; is the position before the change, and direction is 1 if posBefore.Size &gt; 0 or -1 if posBefore.Size &lt; 0, |
+| transaction_fee | [cosmos.base.v1beta1.Coin](#cosmos-base-v1beta1-Coin) |  | Transaction fee paid. A &#34;taker&#34; fee. |
+| position_size | [string](#string) |  | Position size after the change. |
 | realized_pnl | [string](#string) |  | realize profits and losses after the change |
 | unrealized_pnl_after | [string](#string) |  | unrealized profits and losses after the change |
 | bad_debt | [cosmos.base.v1beta1.Coin](#cosmos-base-v1beta1-Coin) |  | Amount of bad debt cleared by the PerpEF during the change. Bad debt is negative net margin past the liquidation point of a position. |
-| liquidation_penalty | [string](#string) |  | amt of margin (y) lost due to liquidation |
 | mark_price | [string](#string) |  | Mark price, synonymous with mark price in this context, is the quotient of the quote reserves and base reserves |
 | funding_payment | [string](#string) |  | A funding payment made or received by the trader on the current position. &#39;fundingPayment&#39; is positive if &#39;owner&#39; is the sender and negative if &#39;owner&#39; is the receiver of the payment. Its magnitude is abs(vSize * fundingRate). Funding payments act to converge the mark price (vPrice) and index price (average price on major exchanges). |
 | block_height | [int64](#int64) |  | The block number at which this position was changed. |
@@ -214,9 +240,9 @@ GenesisState defines the perp module&#39;s genesis state.
 
 
 
-<a name="nibiru-perp-v1-QueryFundingRatesRequest"></a>
+<a name="nibiru-perp-v1-QueryCumulativePremiumFractionRequest"></a>
 
-### QueryFundingRatesRequest
+### QueryCumulativePremiumFractionRequest
 
 
 
@@ -229,15 +255,46 @@ GenesisState defines the perp module&#39;s genesis state.
 
 
 
-<a name="nibiru-perp-v1-QueryFundingRatesResponse"></a>
+<a name="nibiru-perp-v1-QueryCumulativePremiumFractionResponse"></a>
 
-### QueryFundingRatesResponse
+### QueryCumulativePremiumFractionResponse
 
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| cumulative_funding_rates | [string](#string) | repeated | a historical list of cumulative funding rates, with the most recent one last |
+| cumulative_premium_fraction | [string](#string) |  | The latest cumulative premium fraction. |
+| estimated_next_cumulative_premium_fraction | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="nibiru-perp-v1-QueryMetricsRequest"></a>
+
+### QueryMetricsRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| pair | [string](#string) |  | the pair to query for |
+
+
+
+
+
+
+<a name="nibiru-perp-v1-QueryMetricsResponse"></a>
+
+### QueryMetricsResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| metrics | [Metrics](#nibiru-perp-v1-Metrics) |  | list of perp metrics |
 
 
 
@@ -352,7 +409,8 @@ Query defines the gRPC querier service.
 | Params | [QueryParamsRequest](#nibiru-perp-v1-QueryParamsRequest) | [QueryParamsResponse](#nibiru-perp-v1-QueryParamsResponse) | Parameters queries the parameters of the x/perp module. |
 | QueryPosition | [QueryPositionRequest](#nibiru-perp-v1-QueryPositionRequest) | [QueryPositionResponse](#nibiru-perp-v1-QueryPositionResponse) |  |
 | QueryPositions | [QueryPositionsRequest](#nibiru-perp-v1-QueryPositionsRequest) | [QueryPositionsResponse](#nibiru-perp-v1-QueryPositionsResponse) |  |
-| FundingRates | [QueryFundingRatesRequest](#nibiru-perp-v1-QueryFundingRatesRequest) | [QueryFundingRatesResponse](#nibiru-perp-v1-QueryFundingRatesResponse) |  |
+| CumulativePremiumFraction | [QueryCumulativePremiumFractionRequest](#nibiru-perp-v1-QueryCumulativePremiumFractionRequest) | [QueryCumulativePremiumFractionResponse](#nibiru-perp-v1-QueryCumulativePremiumFractionResponse) | Queries the latest cumulative premium fraction and the estimated next cumulative premium fraction. |
+| Metrics | [QueryMetricsRequest](#nibiru-perp-v1-QueryMetricsRequest) | [QueryMetricsResponse](#nibiru-perp-v1-QueryMetricsResponse) |  |
 
  
 
@@ -384,6 +442,24 @@ Query defines the gRPC querier service.
 
 
 
+<a name="nibiru-perp-v1-Metrics"></a>
+
+### Metrics
+PoolMetrics is a structure that displays a snapshot of perp metrics for each pair.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| pair | [string](#string) |  | Pair identifier for the two assets. Always in format &#39;base:quote&#39; |
+| net_size | [string](#string) |  | Sum of all active position sizes for the pair. |
+| volumeQuote | [string](#string) |  | Total notional volume for the pair. |
+| volumeBase | [string](#string) |  | Total size volume for the pair. |
+
+
+
+
+
+
 <a name="nibiru-perp-v1-PairMetadata"></a>
 
 ### PairMetadata
@@ -393,7 +469,7 @@ Query defines the gRPC querier service.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | pair | [nibiru.common.AssetPair](#nibiru-common-AssetPair) |  |  |
-| cumulative_premium_fractions | [string](#string) | repeated | The historical list of cumulative premium fractions for a given pair. Calculated once per epoch. A premium fraction is the difference between mark and index, divided by the number of payments per day. (mark - index) / # payments in a day |
+| latest_cumulative_premium_fraction | [string](#string) |  | Latest cumulative premium fraction for a given pair. Calculated once per funding rate interval. A premium fraction is the difference between mark and index, divided by the number of payments per day. (mark - index) / # payments in a day |
 
 
 
@@ -623,6 +699,32 @@ MsgAddMargin: Msg to remove margin.
 
 
 
+<a name="nibiru-perp-v1-MsgDonateToEcosystemFund"></a>
+
+### MsgDonateToEcosystemFund
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| sender | [string](#string) |  |  |
+| donation | [cosmos.base.v1beta1.Coin](#cosmos-base-v1beta1-Coin) |  | donation to the EF |
+
+
+
+
+
+
+<a name="nibiru-perp-v1-MsgDonateToEcosystemFundResponse"></a>
+
+### MsgDonateToEcosystemFundResponse
+
+
+
+
+
+
+
 <a name="nibiru-perp-v1-MsgLiquidate"></a>
 
 ### MsgLiquidate
@@ -814,6 +916,7 @@ Msg defines the x/perp Msg service.
 | MultiLiquidate | [MsgMultiLiquidate](#nibiru-perp-v1-MsgMultiLiquidate) | [MsgMultiLiquidateResponse](#nibiru-perp-v1-MsgMultiLiquidateResponse) |  |
 | OpenPosition | [MsgOpenPosition](#nibiru-perp-v1-MsgOpenPosition) | [MsgOpenPositionResponse](#nibiru-perp-v1-MsgOpenPositionResponse) |  |
 | ClosePosition | [MsgClosePosition](#nibiru-perp-v1-MsgClosePosition) | [MsgClosePositionResponse](#nibiru-perp-v1-MsgClosePositionResponse) |  |
+| DonateToEcosystemFund | [MsgDonateToEcosystemFund](#nibiru-perp-v1-MsgDonateToEcosystemFund) | [MsgDonateToEcosystemFundResponse](#nibiru-perp-v1-MsgDonateToEcosystemFundResponse) |  |
 
  
 

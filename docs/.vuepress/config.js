@@ -51,7 +51,6 @@ module.exports = {
     // Logo in the top left corner, file in .vuepress/public/
     logo: {
       src: "/nibi-logo-on-white-pink.svg",
-      // src: "https://raw.githubusercontent.com/peterthehan/peterthehan/master/assets/twitter.svg",
     },
     versions: [
       // {
@@ -122,6 +121,11 @@ module.exports = {
               path: "/dev/cli"
             },
             {
+              title: "TypeScript SDK — nibijs",
+              directory: true,
+              path: "/dev/nibijs"
+            },
+            {
               title: "Module Reference",
               directory: true,
               path: "/dev/x",
@@ -130,11 +134,6 @@ module.exports = {
               title: "Nibiru Protobuf",
               directory: true,
               path: "/dev/protobuf",
-            },
-            {
-              title: "TypeScript SDK — nibijs",
-              directory: false,
-              path: "/dev/nibijs.html"
             },
             {
               title: "Python SDK",

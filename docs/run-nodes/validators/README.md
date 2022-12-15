@@ -11,12 +11,12 @@ As the first step, please follow the [instructions to join the testnet](../testn
 ## Install the `nibid` binary
 
 Currently, the source code is not yet public, so pre-compiled binaries are required to run validator nodes.
-Please follow the binary installation instructions if you have not already. 
+Please follow the binary installation instructions if you have not already.
 
 #### Save the Chain ID to your `nibid` config
 
-We recommend saving the `chain-id` into your `client.toml`. 
-This prevents you from havging to pass the `chain-id` flag with every CLI command.
+We recommend saving the `chain-id` into your `client.toml`.
+This prevents you from having to pass the `chain-id` flag with every CLI command.
 
 ```sh
 nibid config chain-id nibiru-testnet-1
@@ -29,13 +29,13 @@ Any participant in the network can become a validator by sending a `create-valid
 - **`commistion-max-change-rate`**: The maximum daily increase of the validator commission. This parameter is fixed cannot be changed after the `create-validator` transaction is processed.
 - **`commision-max-rate`**: The maximum commission rate that this validator can charge. This parameter is fixed and cannot be changed after the `create-validator` transaction is processed.
 - **`commision-rate`**: The commission rate on block rewards and fees charged to delegators. **Note**: The `commission-rate` value must adhere to the following invariants:
-  * Must be between 0 and the validator's `commission-max-rate`
-  * Must not exceed the validator's `commission-max-change-rate`, which is the maximum percentage point change rate **per day**. In other words, a validator can only change its commission once per day and within `commission-max-change-rate` bounds.
+  - Must be between 0 and the validator's `commission-max-rate`
+  - Must not exceed the validator's `commission-max-change-rate`, which is the maximum percentage point change rate **per day**. In other words, a validator can only change its commission once per day and within `commission-max-change-rate` bounds.
 - **`min-self-delegation`**: Minimum amount of ATOM the validator requires to have bonded at all time. If the validator's self-delegated stake falls below this limit, their validator gets jailed and kicked out of the active validator set.
 - **`details`**: The validator description. More information is given on this in the next section.
 - **`pubkey`**: A validator's Tendermint pubkey is associated with a private key used to sign "prevotes" and "precommits". It is prefixed with `nibivalconspub` and found by executing `nibid tendermint show-validator`.
 - **`moniker`**: A (not necessarily unique) name for the validator.
- 
+
 After a validator is created, NIBI holders can delegate NIBI to the validator, effectively adding stake to the validator's pool. The total stake of an address is the combination of NIBI bonded by delegators and NIBI self-bonded by the validator.
 
 Of all of the validators that send a `staking create-validator` transaction, those with the highest total stake are designated members of the validator set. If a validator's total stake falls too low, that validator loses its validator privileges and becomes unable to participate in consensus or generate rewards. Over time, the maximum number of validators may be increased via on-chain governance proposals.
@@ -87,7 +87,7 @@ nibid tx slashing unjail \
   --chain-id=<chain_id>
 ```
 
-## Confirming your validator is running 
+## Confirming your validator is running
 
 Your validator is active if the following command returns anything:
 

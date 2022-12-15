@@ -211,3 +211,4 @@ Nibiru should never need the Safety Fund, but we include it as an extra precauti
 ### Treasury
 
 The protocol Treasury will be the final backstop to minimize drawdown. This is the last fail safe for the protocol. "NIBI printing" is not a stability mechanism for the perps exchange.
+

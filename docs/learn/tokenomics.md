@@ -5,10 +5,10 @@ Nibiru will have a fully diluted token supply of 1.5B tokens. The tokens will be
 
 | Split (%) | Group                   | Description                                                                 | Schedule                                                    |
 | --------- | ----------------------- | --------------------------------------------------------------------------- | ----------------------------------------------------------- |
-| 60        | Community               | Stakers, perps traders, liquidity providers of the AMM, and options traders | Non-linear schedule similar to Juno or Curve.               |
+| 60        | Community               | Stakers, perps traders, and liquidity providers of the AMM | Non-linear schedule similar to Juno or Curve.               |
 | 21        | Team                    | Core team and future hires                                                  | 1 year cliff, then 3 year linear vest                       |
-| 12        | Early Backers / Private | Strategic partners and private investors                                    | 1 year cliff, then 3 year linear vest (liquid each quarter) |
-| 7         | Seed                    | Seed investors                                                              | 1 year cliff, then 3 year linear vest                       |
+| 10        | Seed                    | Seed investors                                                              | 1 year cliff, then 3 year linear vest                       |
+| 9         | Private                 | Strategic partners and private investors                                    | 1 year cliff, then 3 year linear vest (liquid each quarter) |
 
 The token supply is distributed over an 8-year time frame with the following release schedule.
 
@@ -22,19 +22,17 @@ As more tokens are released into the ecosystem, Nibiru will be governed primaril
 
 The team will receive 21% of the total token allocation, with 4.25% available 12 months post genesis and the remaining 12.75% vesting linearly over the following 36 months.
 
-## Seed Investors (7%)
+## Seed Investors (10%)
 
-Seed investors who contributed funds to the initial development and launch of Nibiru will receive an allocation of 1.75% of the total supply 12 months after genesis time with the remaining 5.25% vesting linearly over the following 36 months.
+Seed investors who contributed funds to the initial development and launch of Nibiru will receive an allocation of 2.5% of the total supply 12 months after genesis time with the remaining 7.5% vesting linearly over the following 36 months.
 
-## Early Backers / Private (12%)
+## Private (9%)
 
-Investors and strategic partners will receive an allocation of 12% (180M) of the total supply, with 3% (45M) available 12 months after genesis and the remaining 9% (135M) will vest linearly over the following 36 months, at a rate of 3,750,000 NIBI tokens per month.
+Investors and strategic partners will receive an allocation of 9% of the total supply, with 2.25% available 12 months after genesis and the remaining 6.75%  vesting linearly over the following 36 months.
 
-All of the private investors’ token allocation will be staked with validators, with the staked amount becoming available to private investors following the unlocking schedule.
+All of the private investors’ token allocation can be staked during the lock, which would result in liquid rewards to be used discretionarily.
 
-Investors will receive liquid rewards while the investors’ allocation is staked with a validator. The rewards can be used at the investors’ discretion. This gives investors the ability to either provide liquidity to the AMM or stake with validators.
-
-The proceeds from this sale will be used primarily to fund the Perps Ecosystem Fund.
+This gives investors the ability to either provide liquidity to the AMM or increase the staked amount.
 
 ## Community (60%)
 
@@ -46,18 +44,14 @@ Validators (and delegators) will receive token allocation over 8 years. After th
 
 The treasury is constructed as a discretionary fund to ensure the stability of the protocol. The treasury will initially be managed by a multi-sig wallet held by members of the core team, and will eventually transition to being controlled by the community.
 
-### Ecosystem: **Nibi-Swap AMM**
+### Community: Nibi-Swap AMM
 
 Nibi-Swap AMM liquidity providers will receive inflationary incentives for locking their LP shares with liquidity gauges.
 
 Liquidity providers can choose to lock their LP tokens in a gauge on a continuous time curve between for up to 4 years. Locking liquidity for longer gives higher incentive rewards, which are realized in-full at the end of the lock period.
 
-### Ecosystem: **Perps Exchange**
+### Community: Perps Exchange
 
 Traders will be rewarded with NIBI tokens for doing certain actions on the perps trading platform, such as opening positions or paying funding payments.
 
 Nibiru’s Perp Exchange will also incentivize the safety staking pool (see [dYdX’s Safety Module](https://docs.dydx.community/dydx-governance/staking-pools/safety-staking-pool)) with NIBI as an additional backstop for the system.
-
-### Ecosystem: **Options Protocol**
-
-Traders will be rewarded with NIBI tokens for investing in the products on the options platform.

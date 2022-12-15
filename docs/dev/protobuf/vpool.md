@@ -6,14 +6,16 @@
 - [vpool/v1/event.proto](#vpool_v1_event-proto)
     - [MarkPriceChangedEvent](#nibiru-vpool-v1-MarkPriceChangedEvent)
     - [ReserveSnapshotSavedEvent](#nibiru-vpool-v1-ReserveSnapshotSavedEvent)
-    - [SwapBaseForQuoteEvent](#nibiru-vpool-v1-SwapBaseForQuoteEvent)
-    - [SwapQuoteForBaseEvent](#nibiru-vpool-v1-SwapQuoteForBaseEvent)
+    - [SwapOnVpoolEvent](#nibiru-vpool-v1-SwapOnVpoolEvent)
   
 - [vpool/v1/genesis.proto](#vpool_v1_genesis-proto)
     - [GenesisState](#nibiru-vpool-v1-GenesisState)
   
 - [vpool/v1/gov.proto](#vpool_v1_gov-proto)
     - [CreatePoolProposal](#nibiru-vpool-v1-CreatePoolProposal)
+    - [EditPoolConfigProposal](#nibiru-vpool-v1-EditPoolConfigProposal)
+    - [EditSwapInvariantsProposal](#nibiru-vpool-v1-EditSwapInvariantsProposal)
+    - [EditSwapInvariantsProposal.SwapInvariantMultiple](#nibiru-vpool-v1-EditSwapInvariantsProposal-SwapInvariantMultiple)
   
 - [vpool/v1/query.proto](#vpool_v1_query-proto)
     - [QueryAllPoolsRequest](#nibiru-vpool-v1-QueryAllPoolsRequest)
@@ -29,7 +31,8 @@
     - [CurrentTWAP](#nibiru-vpool-v1-CurrentTWAP)
     - [PoolPrices](#nibiru-vpool-v1-PoolPrices)
     - [ReserveSnapshot](#nibiru-vpool-v1-ReserveSnapshot)
-    - [VPool](#nibiru-vpool-v1-VPool)
+    - [Vpool](#nibiru-vpool-v1-Vpool)
+    - [VpoolConfig](#nibiru-vpool-v1-VpoolConfig)
   
     - [Direction](#nibiru-vpool-v1-Direction)
     - [TwapCalcOption](#nibiru-vpool-v1-TwapCalcOption)
@@ -55,7 +58,7 @@
 | ----- | ---- | ----- | ----------- |
 | pair | [string](#string) |  |  |
 | price | [string](#string) |  |  |
-| timestamp | [google.protobuf.Timestamp](#google-protobuf-Timestamp) |  |  |
+| block_timestamp | [google.protobuf.Timestamp](#google-protobuf-Timestamp) |  |  |
 
 
 
@@ -73,40 +76,28 @@
 | pair | [string](#string) |  |  |
 | quote_reserve | [string](#string) |  |  |
 | base_reserve | [string](#string) |  |  |
+| mark_price | [string](#string) |  | MarkPrice at the end of the block. (instantaneous) markPrice := quoteReserve / baseReserve |
+| block_height | [int64](#int64) |  |  |
+| block_timestamp | [google.protobuf.Timestamp](#google-protobuf-Timestamp) |  |  |
 
 
 
 
 
 
-<a name="nibiru-vpool-v1-SwapBaseForQuoteEvent"></a>
+<a name="nibiru-vpool-v1-SwapOnVpoolEvent"></a>
 
-### SwapBaseForQuoteEvent
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| pair | [string](#string) |  |  |
-| quote_amount | [string](#string) |  |  |
-| base_amount | [string](#string) |  |  |
-
-
-
-
-
-
-<a name="nibiru-vpool-v1-SwapQuoteForBaseEvent"></a>
-
-### SwapQuoteForBaseEvent
-
+### SwapOnVpoolEvent
+A swap on the vpool represented by &#39;pair&#39;. 
+Amounts are negative or positive base on the perspective of the pool, i.e.
+a negative quote means the trader has gained quote and the vpool lost quote.
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | pair | [string](#string) |  |  |
-| quote_amount | [string](#string) |  |  |
-| base_amount | [string](#string) |  |  |
+| quote_amount | [string](#string) |  | delta in the quote reserves of the vpool |
+| base_amount | [string](#string) |  | delta in the base reserves of the vpool |
 
 
 
@@ -137,8 +128,7 @@ GenesisState defines the vpool module&#39;s genesis state.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| vpools | [VPool](#nibiru-vpool-v1-VPool) | repeated |  |
-| snapshots | [ReserveSnapshot](#nibiru-vpool-v1-ReserveSnapshot) | repeated |  |
+| vpools | [Vpool](#nibiru-vpool-v1-Vpool) | repeated |  |
 
 
 
@@ -172,13 +162,61 @@ GenesisState defines the vpool module&#39;s genesis state.
 | title | [string](#string) |  |  |
 | description | [string](#string) |  |  |
 | pair | [string](#string) |  | pair represents the pair of the vpool. |
-| trade_limit_ratio | [string](#string) |  | trade_limit_ratio represents the limit on trading amounts. |
 | quote_asset_reserve | [string](#string) |  | quote_asset_reserve is the amount of quote asset the pool will be initialized with. |
 | base_asset_reserve | [string](#string) |  | base_asset_reserve is the amount of base asset the pool will be initialized with. |
-| fluctuation_limit_ratio | [string](#string) |  | fluctuation_limit_ratio represents the maximum price percentage difference a trade can create on the pool. |
-| max_oracle_spread_ratio | [string](#string) |  | max_oracle_spread_ratio represents the maximum price percentage difference that can exist between oracle price and vpool prices after a trade. |
-| maintenance_margin_ratio | [string](#string) |  | maintenance_margin_ratio |
-| max_leverage | [string](#string) |  | max_leverage |
+| config | [VpoolConfig](#nibiru-vpool-v1-VpoolConfig) |  |  |
+
+
+
+
+
+
+<a name="nibiru-vpool-v1-EditPoolConfigProposal"></a>
+
+### EditPoolConfigProposal
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| title | [string](#string) |  |  |
+| description | [string](#string) |  |  |
+| pair | [string](#string) |  |  |
+| config | [VpoolConfig](#nibiru-vpool-v1-VpoolConfig) |  |  |
+
+
+
+
+
+
+<a name="nibiru-vpool-v1-EditSwapInvariantsProposal"></a>
+
+### EditSwapInvariantsProposal
+EditSwapInvariantsProposal is a governance proposal to change the swap 
+invariant of the virtual pool for one or more trading pairs.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| title | [string](#string) |  |  |
+| description | [string](#string) |  |  |
+| swap_invariant_maps | [EditSwapInvariantsProposal.SwapInvariantMultiple](#nibiru-vpool-v1-EditSwapInvariantsProposal-SwapInvariantMultiple) | repeated | Map from pair ID to a multiple on the swap invariant. For example, a proposal containing &#34;swap_invariant_maps&#34;: [{ &#34;uatom:unusd&#34;: &#34;5&#34; }, { &#34;uosmo:unusd&#34;: &#34;0.9&#34; }] would mutliply the swap invariant of the ATOM and OSMO trading pairs by 5 and 0.9 respectively. The price at which k changes is the instantaneous mark price at the time of the proposal&#39;s execution. |
+
+
+
+
+
+
+<a name="nibiru-vpool-v1-EditSwapInvariantsProposal-SwapInvariantMultiple"></a>
+
+### EditSwapInvariantsProposal.SwapInvariantMultiple
+A map between a trading pair and a desired multiplier for its swap invariant.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| pair | [string](#string) |  | Pair is a string identifier for an asset pair. |
+| multiplier | [string](#string) |  | Multiplier is a number representing the desired percentage change to the swap invariant of the AMM pool underlying &#39;pair&#39; |
 
 
 
@@ -219,7 +257,7 @@ GenesisState defines the vpool module&#39;s genesis state.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| pools | [VPool](#nibiru-vpool-v1-VPool) | repeated |  |
+| pools | [Vpool](#nibiru-vpool-v1-Vpool) | repeated |  |
 | prices | [PoolPrices](#nibiru-vpool-v1-PoolPrices) | repeated |  |
 
 
@@ -376,9 +414,9 @@ a snapshot of the vpool&#39;s reserves at a given point in time
 
 
 
-<a name="nibiru-vpool-v1-VPool"></a>
+<a name="nibiru-vpool-v1-Vpool"></a>
 
-### VPool
+### Vpool
 A virtual pool used only for price discovery of perpetual futures contracts.
 No real liquidity exists in this pool.
 
@@ -388,6 +426,21 @@ No real liquidity exists in this pool.
 | pair | [nibiru.common.AssetPair](#nibiru-common-AssetPair) |  | always BASE:QUOTE, e.g. BTC:NUSD or ETH:NUSD |
 | base_asset_reserve | [string](#string) |  | base asset is the crypto asset, e.g. BTC or ETH |
 | quote_asset_reserve | [string](#string) |  | quote asset is usually stablecoin, in our case NUSD |
+| config | [VpoolConfig](#nibiru-vpool-v1-VpoolConfig) |  |  |
+
+
+
+
+
+
+<a name="nibiru-vpool-v1-VpoolConfig"></a>
+
+### VpoolConfig
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
 | trade_limit_ratio | [string](#string) |  | ratio applied to reserves in order not to over trade |
 | fluctuation_limit_ratio | [string](#string) |  | percentage that a single open or close position can alter the reserve amounts |
 | max_oracle_spread_ratio | [string](#string) |  | max_oracle_spread_ratio |

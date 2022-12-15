@@ -3,6 +3,10 @@
 
 ## Table of Contents
 
+- [epochs/event.proto](#epochs_event-proto)
+    - [EventEpochEnd](#nibiru-epochs-v1-EventEpochEnd)
+    - [EventEpochStart](#nibiru-epochs-v1-EventEpochStart)
+  
 - [epochs/genesis.proto](#epochs_genesis-proto)
     - [GenesisState](#nibiru-epochs-v1beta1-GenesisState)
   
@@ -18,6 +22,53 @@
     - [EpochInfo](#nibiru-epochs-v1beta1-EpochInfo)
   
 - [Scalar Value Types](#scalar-value-types)
+
+
+
+<a name="epochs_event-proto"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## epochs/event.proto
+
+
+
+<a name="nibiru-epochs-v1-EventEpochEnd"></a>
+
+### EventEpochEnd
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| epoch_number | [uint64](#uint64) |  | Epoch number, starting from 1. |
+
+
+
+
+
+
+<a name="nibiru-epochs-v1-EventEpochStart"></a>
+
+### EventEpochStart
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| epoch_number | [uint64](#uint64) |  | Epoch number, starting from 1. |
+| epoch_start_time | [google.protobuf.Timestamp](#google-protobuf-Timestamp) |  | The start timestamp of the epoch. |
+
+
+
+
+
+ 
+
+ 
+
+ 
+
+ 
 
 
 

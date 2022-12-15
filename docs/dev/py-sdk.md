@@ -186,7 +186,7 @@ poetry run pytest -p no:warnings # silences warnings
 ## Makefile and Protocol Buffers
 
 See the [NibiruChain/sdk-proto-gen repository](https://github.com/NibiruChain/sdk-proto-gen).
-### Generating types wth protobuf
+### Generating types with protobuf
 
 The objective is to run `make proto-gen`, which simply executes `scripts/protocgen.sh`.
 

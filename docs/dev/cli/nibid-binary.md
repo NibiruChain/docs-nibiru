@@ -6,7 +6,21 @@ order: 1
 
 Instructions on building and installing the `nibid` binary. `nibid` is a command line client for the Nibiru blockchain. Nibiru users can use nibid to send transactions to the Nibiru network, query data from the chain, and run nodes. To install the `nibid` binary, you can either (1) download the binary from the NibiruChain/nibiru releases page (2) or build the binary directly from the source code. {synopsis}
 
-## Install Option 1 | Downloading the binary
+## Install Option 1 | Use our bash script
+
+```bash
+curl -s https://get.nibiru.fi/! | bash
+```
+
+Or, if you would like to get a specific version, use:
+
+```bash
+curl -s https://get.nibiru.fi/@v0.15.0! | bash
+```
+
+**NOTE**: The `!` sign in the URL makes the script move the binary to `/usr/local/bin` after downloading it. For this, it will ask you for `sudo` password. If you would like to skip this, just ommit the `!` sign from the URL.
+
+## Install Option 2 | Downloading the binary
 
 You'll need one of the `darwin_` binaries if you're using MacOS and one of the `linux_` binaries if you're using something like Ubuntu or WSL.
 
@@ -45,7 +59,7 @@ export PATH=<path-to-nibid>:$PATH
 cp nibid /bin/nibid
 ```
 
-## Install Option 2 | Building from the Source Code
+## Install Option 3 | Building from the Source Code
 
 ### 2.1 — Install make and gcc
 
