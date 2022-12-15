@@ -47,7 +47,7 @@ sudo apt upgrade --yes
 Please check for the correct version of the binary.
 
 ::: tip
-If you have not installed `nibid`, please start with the instructions on building the [`nibid` binary](../../dev/cli/nibid-binary).
+If you have not installed `nibid`, please start with the instructions on installing [`nibid` binary](../../dev/cli/nibid-binary).
 :::
 
 ```bash
@@ -78,7 +78,14 @@ Please follow the [`cosmovisor` setup instructions](./cosmovisor) if you haven't
 
 3. Copy the genesis file to the `$HOME/.nibid/config` folder.
   
-    You can download a copy of the genesis file from the Tendermint RPC endpoint.
+    You can get genesis from our networks endpoint with:
+
+    ```bash
+    NETWORK=nibiru-testnet-1
+    curl -s https://networks.testnet.nibiru.fi/$NETWORK/genesis > genesis.json
+    ```
+
+    Or you can download it from the Tendermint RPC endpoint.
 
     ```bash
     curl -s https://rpc.testnet-1.nibiru.fi/genesis | jq -r .result.genesis > genesis.json
@@ -99,19 +106,11 @@ Please follow the [`cosmovisor` setup instructions](./cosmovisor) if you haven't
     ``` 
 -->
 
-4. Update persistent peers list in the configuration file `$HOME/.nibid/config/config.toml`.
-
-    Save the following text in a file named `persistent_peers.txt`.
-
-    ```
-    f8610c8c491e8d18e8b566c47ec13f34176f451c@35.185.124.166:26656
-    ed6bec50bf3db42d7caa3e7e57e118f50c944dca@34.23.132.200:26656
-    ```
-
-    Navigate to the directory with the `persistent_peers.txt` file and run
+4. Update seeds list in the configuration file `$HOME/.nibid/config/config.toml`.
 
     ```bash
-    export PEERS=$(cat persistent_peers.txt| tr '\n' '_' | sed 's/_/,/g;s/,$//;s/^/"/;s/$/"/') && sed -i "s/persistent_peers = \"\"/persistent_peers = ${PEERS}/g" $HOME/.nibid/config/config.toml
+    NETWORK=nibiru-testnet-1
+    sed -i 's|seeds =.*|seeds = "'$(curl -s https://networks.testnet.nibiru.fi/$NETWORK/seeds)'"|g' $HOME/.nibid/config/config.toml
     ```
 
 5. Set minimum gas prices
@@ -134,7 +133,17 @@ Please follow the [`cosmovisor` setup instructions](./cosmovisor) if you haven't
      sed -i 's/skip_timeout_commit =.*/skip_timeout_commit = false/g' $CONFIG_TOML
     ```
 
-7. Start your node (choose one of the options)
+7. Setup state-sync parameters for catching up faster with the network (optional)
+
+    ```bash
+    NETWORK=nibiru-testnet-1
+    sed -i 's|enable =.*|enable = true|g' $HOME/.nibid/config/config.toml
+    sed -i 's|rpc_servers =.*|rpc_servers = "'$(curl -s https://networks.testnet.nibiru.fi/$NETWORK/rpc_servers)'"|g' $HOME/.nibid/config/config.toml
+    sed -i 's|trust_height =.*|trust_height = '$(curl -s https://networks.testnet.nibiru.fi/$NETWORK/trust_height)'%7Cg' $HOME/.nibid/config/config.toml
+    sed -i 's|trust_hash =.*|trust_hash = "'$(curl -s https://networks.testnet.nibiru.fi/$NETWORK/trust_hash)'"|g' $HOME/.nibid/config/config.toml
+    ```
+
+8. Start your node (choose one of the options)
 
     ```bash
     # without a daemon
@@ -147,7 +156,7 @@ Please follow the [`cosmovisor` setup instructions](./cosmovisor) if you haven't
     sudo systemctl start cosmovisor-nibiru
     ```
 
-8. Request tokens from the [Web Faucet for nibiru-testnet-1](https://faucet.testnet-1.nibiru.fi/) if required.
+9. Request tokens from the [Web Faucet for nibiru-testnet-1](https://faucet.testnet-1.nibiru.fi/) if required.
 
     ```bash
     FAUCET_URL="https://faucet.testnet-1.nibiru.fi/"

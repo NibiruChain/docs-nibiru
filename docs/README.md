@@ -16,7 +16,7 @@ Nibiru unifies leveraged derivatives trading, spot trading, staking, and bonded 
 
 A perpetual futures exchange where users can take leveraged exposure and trade on a plethora of assets — completely on-chain, completely non-custodially, and with minimal gas fees.
 
-### [Nibi-Swap AMM](./ecosystem/nibi-swap)
+### [Nibi-Swap Spot AMM](./ecosystem/nibi-swap)
 
 **Nibi-Swap** is an automated market maker protocol for multichain assets. This application gives users access to swaps, pools, and bonded liquidity gauges.
 

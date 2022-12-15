@@ -9,7 +9,7 @@ This message gets wrapped into a transaction to be included in the current block
 * **AMMs**: Reading prices directly from AMMs will form the backbone of Nibiru’s price feeds. These feeds come from liquid Ethereum markets like Uniswap and SushiSwap and liquid Cosmos chains with spot DEXs such as Osmosis, Juno, and (someday) Nibi-Swap. For spot markets in the Cosmos ecosystem, we’re also onboarding validators that have infrastructure set up on both chains so that we can read prices of liquid pools without latency.
 * **ChainLink**: The BTC, ETH, and ATOM feeds update roughly every 10 minutes. We have feeds set up for ChainLink, but this update time is clearly too slow to use as a standalone oracle.
 * **Pyth Network**: Pyth offers an excellent solution for accurate, sub-second updates on BTC:USD and ETH:USD prices. This will also be one of the data sources. [\[Pyth protocol whitepaper\]](https://pyth.network/whitepaper.pdf) [\[Pyth network application\]](https://pyth.network/)
-* **Centralized exchange REST APIs**: We’re currently setting up feeds from Binance, Kraken, and FTX.
+* **Centralized exchange REST APIs**: We’re currently setting up feeds from Binance and Kraken.
 
 The Nibiru team sets up several price feeds through whitelisted `oracle` accounts. While the initial set of oracles will be maintained by the Nibiru team, additional oracles can also be added via on-chain governance.
 
@@ -19,12 +19,12 @@ Let’s denote the following variables to go into more detail:
 
 <div align="center">
 
-|  Variable |  Description | 
-| :---: | ---  |
-| $t$ | a block timestamp (Unix) |
-| $t_b$ | the current block’s timestamp (Unix) |
-| $T$ | the set of all block timestamps (Unix) from the past hour. |
-| $p_t$ | the median of all valid, posted prices for the block at timestamp $t$ |
+| Variable | Description                                                           |
+| :------: | --------------------------------------------------------------------- |
+|   $t$    | a block timestamp (Unix)                                              |
+|  $t_b$   | the current block’s timestamp (Unix)                                  |
+|   $T$    | the set of all block timestamps (Unix) from the past hour.            |
+|  $p_t$   | the median of all valid, posted prices for the block at timestamp $t$ |
 
 </div>
 
@@ -50,10 +50,10 @@ Let's say you have an asset like ATOM with price feeds on 3 different AMMs. The 
 
 <div align="center">
 
-|  Variable |  Description | 
-| :---: | ---  |
-| $p_i$ |  posted price |
-| $\ell_i$ |  liquidity value |
+| Variable | Description     |
+| :------: | --------------- |
+|  $p_i$   | posted price    |
+| $\ell_i$ | liquidity value |
 
 </div>
 
