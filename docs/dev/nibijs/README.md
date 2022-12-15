@@ -2,9 +2,7 @@
 order: 1
 ---
 
-# NibiJS Documentation - v0.8.1
-
-NibiJS Documentation - v0.8.1 / [Exports](nibijs.md)
+# NibiJS Documentation - v0.8.3
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/NibiruChain/ts-sdk/main/img/nibijs.png" width="100%">
@@ -162,7 +160,10 @@ TODO
     yarn build
     ```
 
-See [HACKING.md](https://github.com/NibiruChain/ts-sdk/blob/main/HACKING.md) for the full development guide. 
+See [HACKING.md](https://github.com/NibiruChain/ts-sdk/blob/main/HACKING.md) for the full development guide. It includes instructions on:
+1. Running tests
+2. Generating code for the @nibiruchain/protojs package
+3. Generating documentation in HTML or Markdown from the comments of @nibiruchain/nibijs
 
 ---
 
@@ -173,5 +174,5 @@ This software is licensed under the MIT license. See [LICENSE](https://github.co
 © 2022 Nibi, Inc.
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/NibiruChain/ts-sdk/main/img/nibi-logo-onwhite.png" style="width: 200px">
+<img src="https://raw.githubusercontent.com/NibiruChain/ts-sdk/main/img/nibi-logo-onwhite.png" width="200px">
 </p>

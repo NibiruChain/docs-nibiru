@@ -200,9 +200,10 @@ function replaceOriginalWithTemp(tempPath: string) {
 }
 
 async function addTitleToReadme() {
-  // Read the first line of the in-file
+  // Read from exports.md to get the title with a version number
+  const pathExports = path.join(...PATH_LIST_DIR.concat(["exports.md"]));
   const rl = readline.createInterface({
-    input: fs.createReadStream(path.join(...PATH_LIST_IN_FILE)),
+    input: fs.createReadStream(pathExports),
     crlfDelay: Infinity,
   });
 

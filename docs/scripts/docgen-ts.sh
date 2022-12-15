@@ -14,8 +14,9 @@ cp -r ts-sdk/packages/nibijs/docs/** $new_docs_dir
 # From inside the new_docs_dir, create README.md and nibijs.md
 # README.md becomes the markdown for docs.nibiru.fi/dev/nibijs
 # nibijs.md holds the content for both exports.md and functions.md
+cp ts-sdk/packages/nibijs/README.md $new_docs_dir/README.md
 cd $new_docs_dir
-mv intro.md README.md
+rm intro.md
 egrep -lRZ 'intro.md' . | xargs -0 -l sed -i -e 's/intro.md/README.md/g'
 mv modules.md nibijs.md
 egrep -lRZ 'modules.md' . | xargs -0 -l sed -i -e 's/modules.md/nibijs.md/g'
