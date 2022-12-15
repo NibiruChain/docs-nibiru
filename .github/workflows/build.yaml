@@ -1,11 +1,9 @@
-name: ⛓️ Tests
-
-on: 
+# For documentation build info, see docs/DOCS_README.md.
+name: ⛓️ Test static build (pull request)
+on:
   pull_request:
-    branches: ["main", "release/*"]
-  push:
-    branches: ["main"]
-  
+    paths: [docs/**]
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}-${{ github.head_ref }}
   cancel-in-progress: ${{ ! (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/release/')) }}

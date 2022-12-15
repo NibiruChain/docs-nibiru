@@ -53,16 +53,16 @@ module.exports = {
       src: "/nibi-logo-on-white-pink.svg",
     },
     versions: [
-      {
-        "label": "main",
-        "key": "main"
-      },
+      // {
+      //   "label": "main",
+      //   "key": "main"
+      // },
     ],
     topbar: {
       banner: true
     },
     sidebar: {
-      auto: true,
+      auto: false,
       nav: [
         {
           title: "Nibiru Ecosystem",
@@ -121,6 +121,11 @@ module.exports = {
               path: "/dev/cli"
             },
             {
+              title: "TypeScript SDK — nibijs",
+              directory: true,
+              path: "/dev/nibijs"
+            },
+            {
               title: "Module Reference",
               directory: true,
               path: "/dev/x",
@@ -129,11 +134,6 @@ module.exports = {
               title: "Nibiru Protobuf",
               directory: true,
               path: "/dev/protobuf",
-            },
-            {
-              title: "TypeScript SDK — nibijs",
-              directory: false,
-              path: "/dev/nibijs.html"
             },
             {
               title: "Python SDK",
