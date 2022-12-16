@@ -2,7 +2,7 @@
 order: 1
 ---
 
-# NibiJS Documentation - v0.8.3
+# NibiJS Documentation - v0.8.4
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/NibiruChain/ts-sdk/main/img/nibijs.png" width="100%">

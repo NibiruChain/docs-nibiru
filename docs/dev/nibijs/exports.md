@@ -2,7 +2,7 @@
 order: 2
 ---
 
-[NibiJS Documentation - v0.8.3](README.md) / Exports
+[NibiJS Documentation - v0.8.4](README.md) / Exports
 
 # NibiJS - Exports
 
@@ -24,16 +24,11 @@ order: 2
 
 - [Chain](interfaces/Chain.md)
 - [CoinMap](interfaces/CoinMap.md)
-- [DexExtension](interfaces/DexExtension.md)
-- [EpochsExtension](interfaces/EpochsExtension.md)
 - [IEventLog](interfaces/IEventLog.md)
 - [IQueryCmd](interfaces/IQueryCmd.md)
 - [ISdk](interfaces/ISdk.md)
 - [MsgTypeUrls](interfaces/MsgTypeUrls.md)
-- [PerpExtension](interfaces/PerpExtension.md)
-- [PricefeedExtension](interfaces/PricefeedExtension.md)
 - [TxMessage](interfaces/TxMessage.md)
-- [VpoolExtension](interfaces/VpoolExtension.md)
 
 ### Type Aliases
 
@@ -58,7 +53,7 @@ order: 2
 
 #### Defined in
 
-[tx/tx.ts:26](https://github.com/NibiruChain/ts-sdk/blob/5bcbdf3/packages/nibijs/src/tx/tx.ts#L26)
+[tx/tx.ts:26](https://github.com/NibiruChain/ts-sdk/blob/fd87694/packages/nibijs/src/tx/tx.ts#L26)
 
 ___
 
@@ -68,17 +63,17 @@ ___
 
 #### Defined in
 
-[tx/tx.ts:27](https://github.com/NibiruChain/ts-sdk/blob/5bcbdf3/packages/nibijs/src/tx/tx.ts#L27)
+[tx/tx.ts:27](https://github.com/NibiruChain/ts-sdk/blob/fd87694/packages/nibijs/src/tx/tx.ts#L27)
 
 ___
 
 ### ExtendedQueryClient
 
-Ƭ **ExtendedQueryClient**: `BankExtension` & `QueryClient` & `AuthExtension` & [`DexExtension`](interfaces/DexExtension.md) & [`PerpExtension`](interfaces/PerpExtension.md) & [`VpoolExtension`](interfaces/VpoolExtension.md) & [`PricefeedExtension`](interfaces/PricefeedExtension.md) & [`EpochsExtension`](interfaces/EpochsExtension.md)
+Ƭ **ExtendedQueryClient**: `BankExtension` & `QueryClient` & `AuthExtension` & `DexExtension` & `PerpExtension` & `VpoolExtension` & `PricefeedExtension` & `EpochsExtension`
 
 #### Defined in
 
-[query/query.ts:16](https://github.com/NibiruChain/ts-sdk/blob/5bcbdf3/packages/nibijs/src/query/query.ts#L16)
+[query/query.ts:16](https://github.com/NibiruChain/ts-sdk/blob/fd87694/packages/nibijs/src/query/query.ts#L16)
 
 ## Variables
 
@@ -97,7 +92,7 @@ ___
 
 #### Defined in
 
-[chain/chain.ts:64](https://github.com/NibiruChain/ts-sdk/blob/5bcbdf3/packages/nibijs/src/chain/chain.ts#L64)
+[chain/chain.ts:64](https://github.com/NibiruChain/ts-sdk/blob/fd87694/packages/nibijs/src/chain/chain.ts#L64)
 
 ___
 
@@ -111,7 +106,7 @@ testing.
 
 #### Defined in
 
-[chain/chain.ts:76](https://github.com/NibiruChain/ts-sdk/blob/5bcbdf3/packages/nibijs/src/chain/chain.ts#L76)
+[chain/chain.ts:76](https://github.com/NibiruChain/ts-sdk/blob/fd87694/packages/nibijs/src/chain/chain.ts#L76)
 
 ___
 
@@ -121,7 +116,7 @@ ___
 
 #### Defined in
 
-[chain/chain.ts:62](https://github.com/NibiruChain/ts-sdk/blob/5bcbdf3/packages/nibijs/src/chain/chain.ts#L62)
+[chain/chain.ts:62](https://github.com/NibiruChain/ts-sdk/blob/fd87694/packages/nibijs/src/chain/chain.ts#L62)
 
 ___
 
@@ -131,7 +126,7 @@ ___
 
 #### Defined in
 
-[chain/parse.ts:4](https://github.com/NibiruChain/ts-sdk/blob/5bcbdf3/packages/nibijs/src/chain/parse.ts#L4)
+[chain/parse.ts:4](https://github.com/NibiruChain/ts-sdk/blob/fd87694/packages/nibijs/src/chain/parse.ts#L4)
 
 ___
 
@@ -141,7 +136,7 @@ ___
 
 #### Defined in
 
-[chain/chain.ts:30](https://github.com/NibiruChain/ts-sdk/blob/5bcbdf3/packages/nibijs/src/chain/chain.ts#L30)
+[chain/chain.ts:30](https://github.com/NibiruChain/ts-sdk/blob/fd87694/packages/nibijs/src/chain/chain.ts#L30)
 
 ___
 
@@ -151,7 +146,7 @@ ___
 
 #### Defined in
 
-[msg/index.ts:16](https://github.com/NibiruChain/ts-sdk/blob/5bcbdf3/packages/nibijs/src/msg/index.ts#L16)
+[msg/index.ts:16](https://github.com/NibiruChain/ts-sdk/blob/fd87694/packages/nibijs/src/msg/index.ts#L16)
 
 ___
 
@@ -161,5 +156,5 @@ ___
 
 #### Defined in
 
-[chain/chain.ts:60](https://github.com/NibiruChain/ts-sdk/blob/5bcbdf3/packages/nibijs/src/chain/chain.ts#L60)
+[chain/chain.ts:60](https://github.com/NibiruChain/ts-sdk/blob/fd87694/packages/nibijs/src/chain/chain.ts#L60)
 

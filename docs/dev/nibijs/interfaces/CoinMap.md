@@ -1,4 +1,4 @@
-[NibiJS Documentation - v0.8.3](../README.md) / [Exports](../README.md) / CoinMap
+[NibiJS Documentation - v0.8.4](../README.md) / [Exports](../README.md) / CoinMap
 
 # Interface: CoinMap
 
