@@ -24,7 +24,7 @@ sudo rm $HOME/go/bin/nibid
 cd nibiru
 git pull
 git fetch --tags
-git checkout v0.15.0
+git checkout v0.16.2
 make install
 ```
 
@@ -32,7 +32,7 @@ Verify the binary version by running
 
 ```bash
 nibid version
-# > v0.15.0
+# > v0.16.2
 ```
 
 ## Recreate the validator

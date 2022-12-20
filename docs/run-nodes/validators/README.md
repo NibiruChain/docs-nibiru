@@ -19,7 +19,7 @@ We recommend saving the `chain-id` into your `client.toml`.
 This prevents you from having to pass the `chain-id` flag with every CLI command.
 
 ```sh
-nibid config chain-id nibiru-testnet-1
+nibid config chain-id nibiru-testnet-2
 ```
 
 ## Send a `create-validator` transaction
@@ -50,7 +50,7 @@ nibid tx staking create-validator \
 --details "put your validator description there" \
 --pubkey=$(nibid tendermint show-validator) \
 --moniker <your_moniker> \
---chain-id nibiru-testnet-1 \
+--chain-id nibiru-testnet-2 \
 --gas-prices 0.025unibi \
 --from <key-name>
 ```
