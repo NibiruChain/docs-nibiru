@@ -132,10 +132,10 @@ nibid version
     sudo systemctl start cosmovisor-nibiru
     ```
 
-5. Request tokens from the [Web Faucet for nibiru-testnet-2](https://faucet.testnet-1.nibiru.fi/) if required.
+5. Request tokens from the [Web Faucet for nibiru-testnet-2](https://faucet.testnet-2.nibiru.fi/) if required.
 
     ```bash
-    FAUCET_URL="https://faucet.testnet-1.nibiru.fi/"
+    FAUCET_URL="https://faucet.testnet-2.nibiru.fi/"
     ADDR="..." # your address 
     curl -X POST -d '{"address": "'"$ADDR"'", "coins": ["10000000unibi","100000000000unusd"]}' $FAUCET_URL
     ```
