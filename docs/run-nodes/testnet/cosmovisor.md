@@ -26,28 +26,14 @@ If you have not installed `nibid`, please start with the instructions on buildin
 When using Cosmovisor, make sure that you do not have auto download of binaries on.
 :::
 
-1. Install Cosmovisor  
-    Option 1 - From source
-    ```bash
-    git clone https://github.com/cosmos/cosmos-sdk
-    cd cosmos-sdk
-    git checkout cosmovisor/v1.2.0
-    make cosmovisor
-    cp cosmovisor/cosmovisor $GOPATH/bin/cosmovisor
-    cd $HOME
-    ```
-
-    Option 2 - With `go get`:
-    ```bash
-    go get github.com/cosmos/cosmos-sdk/cosmovisor/cmd/cosmovisor
-    ```
+1. Install Cosmovisor 
+   Follow these [instructions](https://github.com/cosmos/cosmos-sdk/tree/main/tools/cosmovisor#setup) to install Cosmovisor. 
 
 2. Set up enviroment variables
 
     ```bash
     export DAEMON_NAME=nibid
     export DAEMON_HOME=$HOME/.nibid
-    source ~/.profile
     ```
 
 3. Create required directories
@@ -57,10 +43,10 @@ When using Cosmovisor, make sure that you do not have auto download of binaries 
     mkdir -p $DAEMON_HOME/cosmovisor/upgrades
     ```
 
-4. Add the genesis version of the binary (currently it is `v0.15`). You can verify your binary location with `which nibid` command. For the default location you can use the example below:
+4. Add the genesis version of the binary (currently it is `v0.16.2`) to the `cosmovisor` directory. You can verify your binary location with `which nibid` command. For example:
 
     ```bash
-    cp ~/go/bin/nibid $DAEMON_HOME/cosmovisor/genesis/bin
+    cp $(which nibid) $DAEMON_HOME/cosmovisor/genesis/bin
     ```
 
 5. Create the service for the Cosmovisor
@@ -96,6 +82,13 @@ When using Cosmovisor, make sure that you do not have auto download of binaries 
     ```bash
     sudo systemctl daemon-reload
     sudo systemctl enable cosmovisor-nibiru
+    sudo systemctl start cosmovisor-nibiru
+    ```
+
+    You can inspect the logs using journalctl.
+
+    ```bash
+    journalctl -fu cosmovisor-nibiru
     ```
 
 ---

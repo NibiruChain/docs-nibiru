@@ -10,9 +10,10 @@ Testnets are testing instances of the Nibiru blockchain. Testnet tokens are sepa
 
 You can find a table of each Nibiru testnet and its current status below.
 
-| Network | Chain ID         | Description              | Version | Status |
-| ------- | ---------------- | ------------------------ | ------- | ------ |
-| Testnet | nibiru-testnet-1 | Nibiru's default testnet | v0.15.0 | Active |
+| Network | Chain ID         | Description              | Version                                                               | Status |
+| ------- | ---------------- | ------------------------ | --------------------------------------------------------------------- | ------ |
+| Testnet | nibiru-testnet-1 | Nibiru's default testnet | [v0.15.0](https://github.com/NibiruChain/nibiru/releases/tag/v0.15.0) | Active |
+| Testnet | nibiru-testnet-2 | Nibiru's default testnet | [v0.16.2](https://github.com/NibiruChain/nibiru/releases/tag/v0.16.2) | Active |
 
 ::: tip
 You can see current status of the blockchain at the [Nibiru Block Explorer](https://explorer.testnet.nibiru.fi/).
@@ -21,9 +22,10 @@ The explorer allows you to search through transactions, blocks, wallet addresses
 
 ## Blockchain Parameters
 
-| Block Time | Unbonding Time | Voting Period |
-| ---------- | -------------- | ------------- |
-| 2 seconds  | 21 days        | 10 hours      |
+| Chain ID         | Block Time | Unbonding Time | Voting Period |
+| ---------------- | ---------- | -------------- | ------------- |
+| nibiru-testnet-1 | 5 seconds  | 21 days        | 48 hours      |
+| nibiru-testnet-2 | 2 seconds  | 2 hours        | 24 hours      |
 
 ---
 
@@ -31,49 +33,44 @@ The explorer allows you to search through transactions, blocks, wallet addresses
 
 ### Minimum hardware requirements
 
-- 2CPU
-- 4GB RAM
-- 100GB of disk space (SSD)
+- 4CPU
+- 16GB RAM
+- 500GB of disk space (SSD)
 
 ### Update the system
 
 ```bash
-sudo apt update
-sudo apt upgrade --yes
+sudo apt update && sudo apt upgrade --yes
+```
+
+### Install nibid
+
+```bash
+curl -s https://get.nibiru.fi/! | bash
 ```
 
 ### Verify nibid version
 
-Please check for the correct version of the binary.
-
-::: tip
-If you have not installed `nibid`, please start with the instructions on installing [`nibid` binary](../../dev/cli/nibid-binary).
-:::
-
 ```bash
 nibid version
-v0.15.0
+
+# v0.16.2
 ```
 
 ---
-
-## Cosmovisor
-
-Please follow the [`cosmovisor` setup instructions](./cosmovisor) if you haven't already.
 
 ## Init the Chain
 
 1. Init the chain
 
     ```bash
-    nibid init <moniker-name> --chain-id=nibiru-testnet-1 --home $HOME/.nibid
+    nibid init <moniker-name> --chain-id=nibiru-testnet-2 --home $HOME/.nibid
     ```
 
 2. Create a local key pair
 
     ```bash
     nibid keys add <key-name>
-    nibid keys show <key-name> -a
     ```
 
 3. Copy the genesis file to the `$HOME/.nibid/config` folder.
@@ -81,69 +78,48 @@ Please follow the [`cosmovisor` setup instructions](./cosmovisor) if you haven't
     You can get genesis from our networks endpoint with:
 
     ```bash
-    NETWORK=nibiru-testnet-1
-    curl -s https://networks.testnet.nibiru.fi/$NETWORK/genesis > genesis.json
+    NETWORK=nibiru-testnet-2
+    curl -s https://networks.testnet.nibiru.fi/$NETWORK/genesis > $HOME/.nibid/config/genesis.json
     ```
 
     Or you can download it from the Tendermint RPC endpoint.
 
     ```bash
-    curl -s https://rpc.testnet-1.nibiru.fi/genesis | jq -r .result.genesis > genesis.json
-    ```
-
-    Then copy the genesis file to the `$HOME/.nibid/config` folder.
-
-    ```bash
-    cp genesis.json $HOME/.nibid/config/genesis.json
+    curl -s https://rpc.testnet-2.nibiru.fi/genesis | jq -r .result.genesis > $HOME/.nibid/config/genesis.json
     ```
   
-<!-- 
-    **Genesis.json sha256**
+    **(Optional) Verify Genesis File Checksum**
     
     ```bash
     shasum -a 256 $HOME/.nibid/config/genesis.json
-    94fbd99543f4b7da14f292ea1c61b21ba753e3a84cca64454b8c2fd2d209e6de $HOME/.nibid/config/genesis.json
-    ``` 
--->
 
-4. Update seeds list in the configuration file `$HOME/.nibid/config/config.toml`.
+    # 5cedb9237c6d807a89468268071647649e90b40ac8cd6d1ded8a72323144880d $HOME/.nibid/config/genesis.json
+    ``` 
+
+1. Update seeds list in the configuration file `$HOME/.nibid/config/config.toml`.
 
     ```bash
-    NETWORK=nibiru-testnet-1
+    NETWORK=nibiru-testnet-2
     sed -i 's|seeds =.*|seeds = "'$(curl -s https://networks.testnet.nibiru.fi/$NETWORK/seeds)'"|g' $HOME/.nibid/config/config.toml
     ```
 
-5. Set minimum gas prices
+2. Set minimum gas prices
 
     ```bash
     sed -i 's/minimum-gas-prices =.*/minimum-gas-prices = "0.025unibi"/g' $HOME/.nibid/config/app.toml
     ```
 
-6. Update block time parameters
+3. Setup state-sync parameters for catching up faster with the network (optional)
 
     ```bash
-    CONFIG_TOML="$HOME/.nibid/config/config.toml"
-     sed -i 's/timeout_propose =.*/timeout_propose = "100ms"/g' $CONFIG_TOML
-     sed -i 's/timeout_propose_delta =.*/timeout_propose_delta = "500ms"/g' $CONFIG_TOML
-     sed -i 's/timeout_prevote =.*/timeout_prevote = "100ms"/g' $CONFIG_TOML
-     sed -i 's/timeout_prevote_delta =.*/timeout_prevote_delta = "500ms"/g' $CONFIG_TOML
-     sed -i 's/timeout_precommit =.*/timeout_precommit = "100ms"/g' $CONFIG_TOML
-     sed -i 's/timeout_precommit_delta =.*/timeout_precommit_delta = "500ms"/g' $CONFIG_TOML
-     sed -i 's/timeout_commit =.*/timeout_commit = "1s"/g' $CONFIG_TOML
-     sed -i 's/skip_timeout_commit =.*/skip_timeout_commit = false/g' $CONFIG_TOML
-    ```
-
-7. Setup state-sync parameters for catching up faster with the network (optional)
-
-    ```bash
-    NETWORK=nibiru-testnet-1
+    NETWORK=nibiru-testnet-2
     sed -i 's|enable =.*|enable = true|g' $HOME/.nibid/config/config.toml
     sed -i 's|rpc_servers =.*|rpc_servers = "'$(curl -s https://networks.testnet.nibiru.fi/$NETWORK/rpc_servers)'"|g' $HOME/.nibid/config/config.toml
     sed -i 's|trust_height =.*|trust_height = '$(curl -s https://networks.testnet.nibiru.fi/$NETWORK/trust_height)'%7Cg' $HOME/.nibid/config/config.toml
     sed -i 's|trust_hash =.*|trust_hash = "'$(curl -s https://networks.testnet.nibiru.fi/$NETWORK/trust_hash)'"|g' $HOME/.nibid/config/config.toml
     ```
 
-8. Start your node (choose one of the options)
+4. Start your node (choose one of the options)
 
     ```bash
     # without a daemon
@@ -156,7 +132,7 @@ Please follow the [`cosmovisor` setup instructions](./cosmovisor) if you haven't
     sudo systemctl start cosmovisor-nibiru
     ```
 
-9. Request tokens from the [Web Faucet for nibiru-testnet-1](https://faucet.testnet-1.nibiru.fi/) if required.
+5. Request tokens from the [Web Faucet for nibiru-testnet-2](https://faucet.testnet-1.nibiru.fi/) if required.
 
     ```bash
     FAUCET_URL="https://faucet.testnet-1.nibiru.fi/"
