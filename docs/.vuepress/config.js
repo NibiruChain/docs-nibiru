@@ -284,11 +284,11 @@ module.exports = {
             {
               title: "Contributing to the docs",
               url:
-                `https://github.com/${REPO}/docs/blob/main/docs/DOCS_README.md`
+                `https://github.com/${REPO}/blob/main/docs/DOCS_README.md`
             },
             {
               title: "Source code on GitHub",
-              url: `https://github.com/${REPO}/docs/`
+              url: `https://github.com/${REPO}/`
             }
           ]
         }
