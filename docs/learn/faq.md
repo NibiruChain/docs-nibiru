@@ -23,7 +23,7 @@ Nibiru associates closely with transition and diruption of an existing system.
 
 ### How can I get involved?
 
-* You can try out any of the protocols by following the [testnet instructions](broken-reference).
+* You can try out any of the protocols by following the [testnet instructions](../run-nodes/testnet/).
 * Coming soon: You can try out any of the protocols through their corresponding web applications at [app.nibiru.fi](https://app.nibiru.fi).
 
 --- 
@@ -43,7 +43,7 @@ Users mint NUSD by placing NIBI and any accepted form of collateral (such as USD
 
 ### What is the release schedule of NIBI?
 
-The token release schedule is described in the [Tokenomics page](../content/tokenomics.md).
+The token release schedule is described in the [Tokenomics page](../learn/tokenomics.md).
 
 ### Where can I go to get other questions answered?
 
@@ -63,4 +63,4 @@ Validators stake NIBI Users can stake without being a validator by delegating NI
 
 ### How can I become a validator?
 
-There are instructions on how to set up various kinds of nodes in the [validator docs](../developer-docs/validators.md). Reach out to the team on [Discord](https://discord.gg/cCbfXatEYs) if you need assistance.
+There are instructions on how to set up various kinds of nodes in the [validator docs](../run-nodes/validators). Reach out to the team on [Discord](https://discord.gg/cCbfXatEYs) if you need assistance.
